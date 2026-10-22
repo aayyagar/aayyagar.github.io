@@ -243,6 +243,36 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 
       <article class="build">
         <div class="vis">
+          <span class="pill">PowerShell · Microsoft Graph</span>
+          <div class="kpis">
+            <div><b>23</b><span>identity checks</span></div>
+            <div><b>6</b><span>categories</span></div>
+            <div><b>0</b><span>writes to tenant</span></div>
+          </div>
+<div class="term"><span class="c"># read-only scopes, Global Reader is enough</span>
+PS&gt; .\Invoke-EntraPostureCheck.ps1 -Demo
+  Score: 49/100  (Grade F)
+<span class="w">  [FAIL] MFA-01  Privileged users registered for MFA</span>
+<span class="w">  [FAIL] PRV-03  No guests in privileged roles</span>
+<span class="ok">  [PASS] CA-01   Legacy authentication is blocked</span>
+  → Report: EntraPosture_Contoso_Demo.html</div>
+        </div>
+        <div class="body">
+          <h3>Entra ID Security Posture Checker</h3>
+          <p>A read-only PowerShell tool that scores a Microsoft Entra ID tenant's identity security and explains how to fix every gap, with evidence.</p>
+          <ul>
+            <li><b>What it finds:</b> admins without MFA, open legacy authentication, too many standing Global Admins, guests in privileged roles, risky app consent and Tier 0 Graph permissions.</li>
+            <li><b>Weighted score:</b> each check is weighted by severity, and checks without data (missing P1/P2 licenses) are skipped instead of penalized.</li>
+            <li><b>Safe by design:</b> every Microsoft Graph call is a GET, with read-only delegated scopes.</li>
+            <li><b>Outputs:</b> a filterable HTML report, plus JSON and CSV for tracking and ticketing.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/entra-posture-checker/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/entra-posture-checker" target="_blank" rel="noopener">View code on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>PowerShell 5.1 / 7 · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
           <span class="pill">PowerShell · Windows + Linux</span>
           <div class="kpis">
             <div><b>70+</b><span>security controls</span></div>
