@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Akhilesh Ayyagari, Cloud Infrastructure & Identity Architect. Hybrid cloud, Active Directory, Entra ID and security hardening.">
+<style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Akhilesh Ayyagari Portfolio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: creative showcase — big name header, then an asymmetric project gallery is the hero; experience as a commit log; contact band. */
+:root{
+  --bg:#F2F3F6; --surface:#FFFFFF; --ink:#151A2C; --muted:#5B6278; --line:#DCDFE7;
+  --accent:#0E8F80; --accent-soft:#D5EFEB; --warm:#E2643A;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Instrument Sans", system-ui, -apple-system, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}
+
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--body)}
+.wrap{max-width:1120px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.mono{font-family:var(--mono);font-size:.8rem;letter-spacing:.02em}
+.label{font-family:var(--mono);font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
+
+/* nav */
+nav{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:22px;flex-wrap:wrap}
+nav .links{display:flex;gap:20px;flex-wrap:wrap}
+nav .links a{text-decoration:none;color:var(--muted);font-weight:500}
+nav .links a:hover{color:var(--ink)}
+.status{display:inline-flex;align-items:center;gap:8px}
+.status i{width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+
+/* header */
+header{padding-block:40px 48px;display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:end}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2.8rem,8vw,6.2rem);line-height:.92;letter-spacing:-.035em;margin:0;text-wrap:balance}
+h1 span{color:var(--accent)}
+.intro{color:var(--muted);max-width:38ch;margin:0}
+.intro strong{color:var(--ink);font-weight:600}
+.stack{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.stack span{font-family:var(--mono);font-size:.75rem;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+
+/* gallery */
+section{padding-block:56px}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:24px;flex-wrap:wrap}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(1.8rem,4vw,2.6rem);letter-spacing:-.02em;margin:0}
+.gallery{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.proj{grid-column:span 2;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;text-decoration:none;transition:transform .25s ease,border-color .25s ease}
+.proj:hover{transform:translateY(-4px);border-color:var(--accent)}
+.proj.big{grid-column:span 4}
+.proj.tall{grid-column:span 2}
+.proj.wide{grid-column:span 6}
+.proj.wide .art{aspect-ratio:16/4}
+.art{aspect-ratio:16/10;max-width:100%;position:relative;overflow:hidden}
+.proj.big .art{aspect-ratio:16/8}
+.meta{padding:18px 20px 20px;display:flex;flex-direction:column;gap:6px;flex:1}
+.meta h3{font-family:var(--display);font-weight:700;font-size:1.3rem;margin:0;letter-spacing:-.01em}
+.meta p{margin:0;color:var(--muted);font-size:.95rem}
+.meta .row{display:flex;justify-content:space-between;gap:12px;margin-top:auto;padding-top:10px;color:var(--muted);flex-wrap:wrap}
+.metric{color:var(--accent);font-weight:500}
+
+/* project art (pure CSS, swap for screenshots later) */
+.a1{background:linear-gradient(135deg,var(--accent) 0%,#0B5E73 100%)}
+.a1::before{content:"";position:absolute;inset:18% 10%;background:repeating-linear-gradient(90deg,rgba(255,255,255,.85) 0 6%,transparent 6% 9%);mask:linear-gradient(to top,#000 0 100%);clip-path:polygon(0 100%,0 70%,12% 55%,24% 62%,36% 35%,48% 48%,60% 20%,72% 30%,84% 8%,100% 15%,100% 100%)}
+.a2{background:#1D2340}
+.a2::before{content:"PS> Start-MigrationWave 4\A ✓ 2012 → 2019\A ✓ app tests passed\A → 500+ servers done";white-space:pre;position:absolute;left:8%;top:18%;font:500 .85rem/1.8 var(--mono);color:#7FE3D3}
+.a3{background:radial-gradient(circle at 30% 40%,var(--warm) 0 18%,transparent 19%),radial-gradient(circle at 65% 60%,var(--accent) 0 24%,transparent 25%),radial-gradient(circle at 75% 25%,#F2C14E 0 10%,transparent 11%),#EDE7DE}
+.a4{background:conic-gradient(from 200deg at 50% 60%,var(--accent),#1D2340,var(--warm),var(--accent))}
+.a5{background:#F7F1E8;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:22px 22px}
+.a5::before{content:"";position:absolute;left:14%;top:22%;width:38%;height:50%;border:3px solid #1D2340;border-radius:10px}
+.a5::after{content:"";position:absolute;right:14%;bottom:20%;width:30%;height:34%;background:var(--warm);border-radius:10px}
+.tag{position:absolute;top:12px;left:12px;font:500 .7rem var(--mono);background:rgba(255,255,255,.9);color:#151A2C;padding:3px 8px;border-radius:6px;letter-spacing:.06em;text-transform:uppercase}
+
+/* commit log */
+.log{border-left:2px solid var(--line);margin-left:6px;display:grid;gap:30px}
+.commit{position:relative;padding-left:28px;display:grid;grid-template-columns:150px 1fr;gap:20px}
+.commit::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--accent)}
+.commit.head-c::before{background:var(--accent)}
+.commit h3{margin:0;font-family:var(--display);font-size:1.15rem;font-weight:700}
+.commit .co{color:var(--accent);font-weight:600}
+.commit p{margin:6px 0 0;color:var(--muted);max-width:62ch}
+.hash{color:var(--warm)}
+
+/* contact */
+.contact{background:var(--ink);color:var(--bg);border-radius:20px;padding:48px clamp(20px,5vw,56px);display:grid;grid-template-columns:1.3fr 1fr;gap:32px;align-items:center}
+.contact h2{color:var(--bg);font-size:clamp(2rem,5vw,3.4rem);line-height:1}
+.contact .label{color:var(--muted)}
+.chan{display:grid;gap:12px}
+.chan div{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid color-mix(in srgb,var(--bg) 20%,transparent);padding-bottom:10px;flex-wrap:wrap}
+.chan .v{font-family:var(--mono);font-size:.85rem;word-break:break-all;user-select:all}
+button.copy{font:500 .75rem var(--mono);background:var(--accent);color:var(--ink);border:0;border-radius:999px;padding:6px 12px;cursor:pointer}
+footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.note{background:var(--accent-soft);color:var(--ink);border-radius:10px;padding:10px 14px;font-size:.88rem;margin-top:8px}
+
+@media (max-width:860px){
+  header{grid-template-columns:1fr}
+  .gallery{grid-template-columns:1fr 1fr}
+  .proj,.proj.big,.proj.tall,.proj.wide{grid-column:span 2}
+  .proj.wide .art{aspect-ratio:16/8}
+.proj.wide{grid-column:span 6}
+.proj.wide .art{aspect-ratio:16/4}
+  .contact{grid-template-columns:1fr}
+}
+@media (max-width:560px){.commit{grid-template-columns:1fr;gap:4px}}
+@media (prefers-reduced-motion:reduce){.proj{transition:none}.proj:hover{transform:none}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.stats div{background:var(--surface);padding:20px;display:flex;flex-direction:column;gap:4px}
+.stats b{font-family:var(--display);font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:800;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.stats span{color:var(--muted);font-size:.88rem}
+.a6{background:#1D2340;background-image:radial-gradient(circle,#7FE3D3 1.5px,transparent 2px);background-size:18px 18px}
+.a6::before{content:"CIS L1 ✓  L2 ✓";position:absolute;right:8%;bottom:14%;font:500 .85rem var(--mono);color:#fff;background:var(--warm);padding:6px 10px;border-radius:6px}
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.skill{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:10px}
+.skill h3{margin:0;font-family:var(--display);font-size:1.1rem}
+.skill .stack{margin-top:0}
+.creds{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:18px}
+.creds .skill p{margin:0;color:var(--muted)}
+.builds{display:grid;gap:22px}
+.build{display:grid;grid-template-columns:1fr 1.15fr;background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden}
+.build .vis{background:#151A2C;color:#E9ECF4;padding:28px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.build .body{padding:28px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.build h3{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3vw,2rem);letter-spacing:-.02em;margin:0;line-height:1.05;text-wrap:balance}
+.build p{margin:0;color:var(--muted)}
+.build ul{margin:0;padding-left:18px;color:var(--muted);display:grid;gap:6px}
+.build ul b{color:var(--ink);font-weight:600}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.kpis div{border:1px solid #2E3552;border-radius:10px;padding:10px 12px}
+.kpis b{display:block;font-family:var(--display);font-size:1.5rem;font-weight:800;color:#7FE3D3;font-variant-numeric:tabular-nums}
+.kpis span{font-size:.75rem;color:#9CA3BA}
+.term{font:400 .78rem/1.7 var(--mono);background:#0D1120;border:1px solid #2E3552;border-radius:10px;padding:14px;overflow-x:auto;white-space:pre;color:#C9CFE0}
+.term .ok{color:#7FE3D3}.term .w{color:#F2C14E}.term .c{color:#6B7391}
+.flow{display:flex;flex-wrap:wrap;gap:6px;list-style:none;padding:0;margin:0}
+.flow li{font:500 .72rem var(--mono);border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:var(--muted)}
+.flow li b{color:var(--accent)}
+.build .vis ul.parts{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;list-style:none;padding:0;margin:0}
+.parts li{font-size:.82rem;color:#C9CFE0;display:flex;gap:8px}
+.parts li span{font-family:var(--mono);color:#F08560;min-width:2.4em}
+.pill{align-self:flex-start;font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7FE3D3;border:1px solid #2E5A5A;padding:3px 8px;border-radius:6px}
+@media (max-width:860px){.stats{grid-template-columns:1fr 1fr}.skills{grid-template-columns:1fr 1fr}.build{grid-template-columns:1fr}}
+@media (max-width:560px){.skills,.creds{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr 1fr}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <span class="status mono"><i></i> Infosys · Atlanta, GA</span>
+    <div class="links"><a href="#projects">Projects</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
+  </nav>
+
+  <header>
+    <h1>Akhilesh<br>Ayyagari<span>.</span></h1>
+    <div>
+      <p class="intro"><strong>Cloud Infrastructure &amp; Identity Architect</strong> and infrastructure project manager. 20+ years delivering secure hybrid cloud, Windows Server, Active Directory and identity solutions across AWS, Azure and Microsoft Entra ID.</p>
+      <div class="stack"><span>Entra ID</span><span>Azure</span><span>AWS</span><span>Active Directory</span><span>Terraform</span><span>PowerShell</span><span>Sentinel · KQL</span></div>
+    </div>
+  </header>
+
+  <div class="stats">
+    <div><b>1,500+</b><span>Azure subscriptions under identity governance</span></div>
+    <div><b>500+</b><span>AWS accounts governed with RBAC</span></div>
+    <div><b>98%</b><span>MFA coverage in the T-Mobile environment</span></div>
+    <div><b>500+</b><span>Windows Servers migrated at PG&amp;E</span></div>
+  </div>
+
+  <section id="projects">
+    <div class="head"><h2>Projects I've built</h2><span class="label">Tools &amp; reference architecture · 2026</span></div>
+    <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · Windows + Linux</span>
+          <div class="kpis">
+            <div><b>70+</b><span>security controls</span></div>
+            <div><b>L2–L6</b><span>hardening levels</span></div>
+            <div><b>5</b><span>compliance frameworks</span></div>
+          </div>
+<div class="term"><span class="c"># run as Administrator</span>
+PS&gt; .\CIS_Hardening_AllInOne.ps1
+  Interface  : GUI (127.0.0.1:58080)
+  Platform   : Windows Server 2022
+  Level      : L4 (STIG)
+  Framework  : NIST SP 800-53
+<span class="ok">  ✓ NET-01  Disable SMBv1</span>
+<span class="ok">  ✓ AUD-01  Advanced Audit Policies</span>
+<span class="w">  ! CRY-01  Disable Legacy TLS (review)</span>
+  → Report: CIS_Report_20260713.html</div>
+        </div>
+        <div class="body">
+          <h3>CIS Benchmark Hardening Suite</h3>
+          <p>A single-file PowerShell tool that hardens Windows and Linux servers to CIS benchmarks, then produces an HTML compliance report. No installs and no extra files.</p>
+          <ul>
+            <li><b>Two ways to run it:</b> a browser-based control picker served from a local listener, or a terminal wizard that lets you approve each control.</li>
+            <li><b>Framework isolation:</b> choosing CIS, NIST SP 800-53, PCI-DSS v4.0, HIPAA or SOX locks out the others' controls, so audit scopes never mix.</li>
+            <li><b>Levels up to Zero Trust and NSA/CNSS:</b> L4 maps to STIG, L5 to Zero Trust, L6 to NSA/CNSS, across 7 control categories.</li>
+            <li><b>Wide coverage:</b> Server 2016–2025, Windows 10/11, and RHEL, Ubuntu, Debian, SUSE, Fedora, Amazon Linux and more.</li>
+          </ul>
+          <ol class="flow" aria-label="Execution flow">
+            <li><b>1</b> Interface</li><li><b>2</b> Platform</li><li><b>3</b> OS</li><li><b>4</b> Level</li><li><b>5</b> Framework</li><li><b>6</b> Controls</li><li><b>7</b> Confirm</li><li><b>8</b> Run + report</li>
+          </ol>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>2,777 lines · 67 functions · 14-chapter reference guide</span><span class="metric">v5.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">Reference architecture</span>
+          <div class="kpis">
+            <div><b>70</b><span>sections</span></div>
+            <div><b>12</b><span>parts</span></div>
+            <div><b>50k</b><span>words</span></div>
+          </div>
+          <ul class="parts">
+            <li><span>P1</span>Foundations &amp; tiering</li>
+            <li><span>P2</span>Privileged access</li>
+            <li><span>P3</span>Cloud &amp; hybrid identity</li>
+            <li><span>P4</span>GPO &amp; operations</li>
+            <li><span>P5</span>Patching &amp; endpoints</li>
+            <li><span>P6</span>PKI &amp; certificates</li>
+            <li><span>P7</span>SIEM &amp; compliance</li>
+            <li><span>P8</span>Lifecycle automation</li>
+            <li><span>P9</span>Infra hardening</li>
+            <li><span>P10</span>Migration &amp; DR</li>
+            <li><span>P11</span>Governance</li>
+            <li><span>P12</span>Appendices</li>
+          </ul>
+        </div>
+        <div class="body">
+          <h3>Enterprise Active Directory Security Architecture</h3>
+          <p>A complete playbook for designing, securing and running Active Directory in a hybrid enterprise, written for domain architects, AD admins and security engineers.</p>
+          <ul>
+            <li><b>Privileged access:</b> Tier 0–3 model, jump servers, PAWs, PIM, service-account lifecycle and passwordless sign-in.</li>
+            <li><b>Hybrid identity:</b> Entra ID hardening, Entra Connect health, ADFS federation and Zero Trust with AD.</li>
+            <li><b>Attack surface:</b> ADCS ESC1–ESC8, Kerberos attacks, and red-team attack path analysis.</li>
+            <li><b>Detection &amp; recovery:</b> a KQL and SPL query library for SIEM, DC disaster recovery and break-glass procedures.</li>
+            <li><b>Ready to use:</b> GPO baselines, a full AD port and firewall reference, health-check scripts and an RFC change template.</li>
+          </ul>
+          <div class="stack" style="margin-top:0"><span>Active Directory</span><span>Entra ID</span><span>Kerberos</span><span>ADCS</span><span>Sentinel · KQL</span><span>WSUS · SCCM · SSM</span><span>PowerShell</span></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Version 1.0 · June 2026</span><span class="metric">70 sections</span></div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="head"><h2>Selected work</h2><span class="label">Client engagements · 2019–2026</span></div>
+    <div class="gallery">
+      <article class="proj big">
+        <div class="art a1"><span class="tag">Current · 2026</span></div>
+        <div class="meta"><h3>T-Mobile · Domain Architect</h3><p>Design and support enterprise DNS and hybrid cloud across AWS, Azure and on-prem. Govern identity and cloud access with Entra ID, Conditional Access and RBAC, and serve as a PIM approver for a 100-member team.</p>
+          <div class="row mono"><span>Entra ID · Route 53 · Terraform · Sentinel</span><span class="metric">95% Conditional Access</span></div></div>
+      </article>
+      <article class="proj tall">
+        <div class="art a2"></div>
+        <div class="meta"><h3>PG&amp;E · Infrastructure Lead</h3><p>Led the move from Windows Server 2012 to 2019 in planned waves, with compatibility testing and rollback plans.</p>
+          <div class="row mono"><span>AD · GPO · PowerShell</span><span class="metric">500+ servers</span></div></div>
+      </article>
+      <article class="proj">
+        <div class="art a5"></div>
+        <div class="meta"><h3>Morgan Stanley · Project Manager</h3><p>PMO oversight for infrastructure upgrades, server hygiene and acquired-entity integrations.</p>
+          <div class="row mono"><span>Jira · Risk registers</span><span class="metric">50+ engineers</span></div></div>
+      </article>
+      <article class="proj">
+        <div class="art a3"></div>
+        <div class="meta"><h3>Tractor Supply · Technical Lead</h3><p>Ran operations and escalations for retail store servers, with automated patching through BladeLogic.</p>
+          <div class="row mono"><span>Linux · VMware · iDRAC</span><span class="metric">2,700+ stores</span></div></div>
+      </article>
+      <article class="proj">
+        <div class="art a4"></div>
+        <div class="meta"><h3>Empire State Building · Architect</h3><p>Architected server, network and security infrastructure, plus backup and disaster recovery.</p>
+          <div class="row mono"><span>vMotion · SimpliVity · Okta</span><span class="metric">DR designed</span></div></div>
+      </article>
+      <article class="proj wide">
+        <div class="art a6"></div>
+        <div class="meta"><h3>LA County Public Works · Senior Windows Engineer</h3><p>Enforced CIS Level 1 and 2 compliance across Windows and Linux, migrated servers from 2008 R2 to 2016, and led the endpoint move to Windows 10 with SCCM task sequences.</p>
+          <div class="row mono"><span>SCCM · SCOM · CIS · Vulnerability remediation</span><span class="metric">Org-wide Win10 rollout</span></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="head"><h2>Skills</h2><span class="label">Core toolkit</span></div>
+    <div class="skills">
+      <div class="skill"><h3>Identity &amp; Access</h3><div class="stack"><span>Entra ID</span><span>OAuth 2.0 / OIDC</span><span>SSO</span><span>Okta</span><span>Conditional Access</span><span>PIM</span><span>RBAC</span><span>AD multi-forest</span><span>AWS IAM</span></div></div>
+      <div class="skill"><h3>Cloud &amp; Automation</h3><div class="stack"><span>AWS</span><span>Azure</span><span>Hybrid cloud</span><span>Route 53</span><span>DNS</span><span>Load balancing</span><span>Terraform</span><span>PowerShell</span><span>Azure DevOps</span></div></div>
+      <div class="skill"><h3>Security &amp; Compliance</h3><div class="stack"><span>Sentinel</span><span>KQL</span><span>Tenable / Nessus</span><span>CVSS</span><span>SSL/TLS lifecycle</span><span>CIS L1/L2</span><span>NIST</span><span>Firewall review</span></div></div>
+      <div class="skill"><h3>Infrastructure</h3><div class="stack"><span>Windows Server 2008–2019</span><span>IIS</span><span>WSUS</span><span>SCCM</span><span>SCOM</span><span>Red Hat · Debian · CentOS</span><span>VMware</span><span>Hyper-V</span><span>Exchange</span></div></div>
+      <div class="skill"><h3>Hardware &amp; Storage</h3><div class="stack"><span>HP ProLiant DL/BL/ML</span><span>iLO</span><span>RAID</span><span>NetApp</span><span>Dell iDRAC</span></div></div>
+      <div class="skill"><h3>Delivery</h3><div class="stack"><span>Vendor coordination</span><span>Change management</span><span>Executive reporting</span><span>Jira</span><span>ServiceNow</span><span>SolarWinds</span></div></div>
+    </div>
+    <div class="creds">
+      <div class="skill"><span class="label">Education</span><h3>M.S., Information, Network &amp; Computer Security</h3><p>New York Institute of Technology · 2016 · With Distinction</p><p>B.Sc., Computer Science &amp; Engineering · Magadh University · 2003</p></div>
+      <div class="skill"><span class="label">Certification</span><h3>Lean Six Sigma Green Belt</h3><p>Acuity Institute · May 2021</p><p><a href="https://www.credly.com/badges/3c9d0c48-d285-4bb2-86b7-4ca80a6c76f1" target="_blank" rel="noopener">View badge on Credly</a></p></div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="head"><h2>Experience</h2><span class="label">git log --oneline</span></div>
+    <div class="log">
+      <div class="commit head-c"><span class="mono"><span class="hash">HEAD</span> · 2021–now</span>
+        <div><h3>Domain Architect · Project Manager · Tech Lead · <span class="co">Infosys</span></h3><p>Sequential client engagements at T-Mobile, Morgan Stanley, Tractor Supply, PG&amp;E and the Empire State Building.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2020–21</span></span>
+        <div><h3>Infrastructure Solutions Engineer · <span class="co">State of Kansas</span></h3><p>Managed multi-forest Active Directory with Quest tools, supported cross-agency AD consolidation, and led Exchange upgrades.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2019–20</span></span>
+        <div><h3>Senior Windows Engineer, Security · <span class="co">LA County Public Works</span></h3><p>AD, SCCM and SCOM administration with CIS Level 1 and 2 enforcement.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2019</span></span>
+        <div><h3>Senior Systems Engineer · <span class="co">Austin Community College</span></h3><p>Ran a security research lab with Tenable, Nessus and CyberArk privileged access controls.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2017–19</span></span>
+        <div><h3>Senior VoIP Engineer · <span class="co">West Virginia Office of Technology</span></h3><p>Administered a Cisco Call Manager cluster for 12,000+ users.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2017</span></span>
+        <div><h3>Windows Firewall Administrator · <span class="co">Bloomberg</span></h3><p>Reviewed and cleaned up rule sets across five firewall platforms and contributed to audit reports.</p></div></div>
+      <div class="commit"><span class="mono"><span class="hash">2003–17</span></span>
+        <div><h3>Earlier roles · <span class="co">Facorne, Takshshila, Medphoenix, SK International (HP Silver Partner)</span></h3><p>Deep HP ProLiant hardware, Active Directory, WSUS/SCCM patch compliance, Citrix and secured cloud server environments.</p></div></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="contact">
+      <div><span class="label">Get in touch</span><h2>Need a cloud or identity architect?</h2></div>
+      <div class="chan">
+        <div><span class="v" id="em">ayyagari.akhilesh@gmail.com</span><button class="copy" id="copyEmail" type="button">Copy</button></div>
+        <div><span class="label">LinkedIn</span><a class="v" href="https://www.linkedin.com/in/akhilesh-ayyagari" target="_blank" rel="noopener">linkedin.com/in/akhilesh-ayyagari</a></div>
+        <div><span class="label">GitHub</span><a class="v" href="https://github.com/aayyagar" target="_blank" rel="noopener">github.com/aayyagar</a></div>
+        <div><span class="label">Location</span><span class="v">Atlanta, GA</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="mono"><span>© 2026 Akhilesh Ayyagari</span><span>Cloud · Identity · Infrastructure</span></footer>
+</div>
+
+<script>
+document.getElementById('copyEmail').addEventListener('click',function(){
+  var b=this,t=document.getElementById('em').textContent;
+  function done(){b.textContent='Copied';setTimeout(function(){b.textContent='Copy'},1600)}
+  function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('em'));var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}
+  try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
+});
+</script>
+</body>
+</html>
