@@ -273,6 +273,63 @@ PS&gt; .\Invoke-EntraPostureCheck.ps1 -Demo
 
       <article class="build">
         <div class="vis">
+          <span class="pill">Conditional Access · JSON + PowerShell</span>
+          <div class="kpis">
+            <div><b>12</b><span>ready policies</span></div>
+            <div><b>report</b><span>-only by default</span></div>
+            <div><b>0</b><span>lockout risk</span></div>
+          </div>
+<div class="term"><span class="c"># safe import, report-only first</span>
+PS&gt; .\Import-CAPolicies.ps1 -ValidateOnly
+<span class="ok">  [OK] CA001 Block legacy authentication</span>
+<span class="ok">  [OK] CA002 Phishing-resistant MFA for admins</span>
+<span class="ok">  [OK] CA003 Require MFA for all users</span>
+  All 12 policy files are valid.</div>
+        </div>
+        <div class="body">
+          <h3>Conditional Access Policy Library</h3>
+          <p>Twelve ready-to-deploy Entra ID Conditional Access policies with a safe import script and a guide explaining each one, drawn from real enterprise rollouts.</p>
+          <ul>
+            <li><b>The policies:</b> block legacy auth, phishing-resistant MFA for admins, MFA for all users and guests, compliant devices, risk-based access and admin session limits.</li>
+            <li><b>Safe by design:</b> imports in report-only mode, requires a break-glass exclusion group, and is idempotent; enforcing needs an explicit <code>-Force</code>.</li>
+            <li><b>Explained, not just shipped:</b> every policy lists what it does, why it matters and what to check before enforcing.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://github.com/aayyagar/conditional-access-library" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Microsoft Graph · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">Terraform · Azure · PowerShell</span>
+          <div class="kpis">
+            <div><b>14</b><span>attack-path checks</span></div>
+            <div><b>ESC1-8</b><span>ADCS coverage</span></div>
+            <div><b>1-click</b><span>build + teardown</span></div>
+          </div>
+<div class="term"><span class="c"># read-only audit of the lab domain</span>
+PS&gt; .\Invoke-ADSecurityAudit.ps1
+  Score: 17/100
+<span class="w">  [Critical] DEL-01 Unconstrained delegation</span>
+<span class="w">  [Critical] ESC-01 ADCS ESC1 template</span>
+<span class="w">  [Critical] KRB-01 Kerberoastable accounts</span></div>
+        </div>
+        <div class="body">
+          <h3>AD Attack Path Lab</h3>
+          <p>A Terraform-built, isolated Active Directory lab that seeds the misconfigurations behind most real domain compromises, plus a read-only tool that finds them and explains each fix.</p>
+          <ul>
+            <li><b>Covers the real paths:</b> Kerberoasting, AS-REP roasting, unconstrained and constrained delegation, credential hygiene, and ADCS ESC1/ESC2.</li>
+            <li><b>Safe to run:</b> the network allows only your IP, seeding is gated behind an explicit switch, and remediation previews with <code>-WhatIf</code> before it changes anything.</li>
+            <li><b>Full loop:</b> build, audit, remediate, re-audit, then tear down for a few dollars.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/ad-attack-path-lab/sample-report/" target="_blank" rel="noopener">View sample audit</a><a class="btn" href="https://github.com/aayyagar/ad-attack-path-lab" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Azure · defensive security training</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+
+      <article class="build">
+        <div class="vis">
           <span class="pill">PowerShell · Windows + Linux</span>
           <div class="kpis">
             <div><b>70+</b><span>security controls</span></div>
