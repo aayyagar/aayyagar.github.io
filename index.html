@@ -146,6 +146,61 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 .pill{align-self:flex-start;font:500 .7rem var(--mono);letter-spacing:.08em;text-transform:uppercase;color:#7FE3D3;border:1px solid #2E5A5A;padding:3px 8px;border-radius:6px}
 @media (max-width:860px){.stats{grid-template-columns:1fr 1fr}.skills{grid-template-columns:1fr 1fr}.build{grid-template-columns:1fr}}
 @media (max-width:560px){.skills,.creds{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr 1fr}}
+
+/* resume button */
+.cta-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 .9rem var(--body);text-decoration:none;padding:10px 16px;border-radius:999px;border:1px solid var(--line);color:var(--ink);background:var(--surface)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+:root[data-theme="dark"] .btn.primary{color:#0F1220}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.primary{color:#0F1220}}
+.btn:hover{border-color:var(--accent)}
+/* terminal */
+.shell{background:#0D1120;border:1px solid #2A3048;border-radius:16px;overflow:hidden;color:#C9CFE0}
+.shell-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:#151A2C;border-bottom:1px solid #2A3048;font:500 .75rem var(--mono);color:#9CA3BA}
+.shell-bar i{width:10px;height:10px;border-radius:50%;background:#3A4160}
+.shell-bar i:nth-child(1){background:#E2643A}.shell-bar i:nth-child(2){background:#F2C14E}.shell-bar i:nth-child(3){background:#3CC7B4}
+.shell-bar span{margin-left:8px}
+#tout{height:340px;overflow-y:auto;padding:16px 18px 6px;font:400 .85rem/1.65 var(--mono);white-space:pre-wrap;word-break:break-word}
+#tout .p{color:#7FE3D3}#tout .k{color:#F2C14E}#tout .e{color:#F08560}#tout .d{color:#6B7391}#tout a{color:#7FE3D3}
+.tline{display:flex;align-items:center;gap:8px;padding:8px 18px 14px;font:400 .85rem var(--mono)}
+.tline label{color:#7FE3D3;white-space:nowrap}
+#tin{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#E9ECF4;font:inherit;caret-color:#7FE3D3}
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px}
+.chips button{font:500 .72rem var(--mono);background:#151A2C;color:#C9CFE0;border:1px solid #2A3048;border-radius:6px;padding:4px 9px;cursor:pointer}
+.chips button:hover{border-color:#3CC7B4;color:#7FE3D3}
+/* CIS demo */
+.demo{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;display:grid;gap:18px}
+.demo h3{margin:0;font-family:var(--display);font-size:1.35rem;font-weight:800;letter-spacing:-.01em}
+.demo .sub{margin:0;color:var(--muted)}
+.picks{display:grid;grid-template-columns:repeat(3,auto);gap:14px 24px;justify-content:start}
+.pick{display:flex;flex-direction:column;gap:6px;min-width:0}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{font:500 .78rem var(--mono);padding:6px 10px;border:1px solid var(--line);border-radius:8px;cursor:pointer;color:var(--muted);background:var(--bg)}
+.seg input:checked+label{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.seg input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+.dres{display:grid;grid-template-columns:220px 1fr;gap:22px;align-items:start}
+.dsum{display:flex;flex-direction:column;gap:12px}
+.dsum .big{font-family:var(--display);font-size:3rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;color:var(--accent)}
+.bars{display:grid;gap:7px}
+.bar{display:grid;grid-template-columns:70px 1fr 22px;gap:8px;align-items:center;font:500 .72rem var(--mono);color:var(--muted)}
+.bar .tr{height:8px;background:var(--bg);border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.bar .fl{height:100%;background:var(--accent);transition:width .35s ease}
+.bar b{text-align:right;color:var(--ink);font-variant-numeric:tabular-nums}
+.clist{max-height:330px;overflow-y:auto;border:1px solid var(--line);border-radius:12px;min-width:0}
+.crow{display:grid;grid-template-columns:62px 1fr auto;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);align-items:start}
+.crow:last-child{border-bottom:0}
+.crow .id{font:500 .75rem var(--mono);color:var(--warm);padding-top:2px}
+.crow b{font-weight:600;font-size:.92rem;display:block}
+.crow span.ds{color:var(--muted);font-size:.82rem}
+.imp{font:500 .65rem var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:5px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.imp.high{border-color:var(--warm);color:var(--warm)}
+.imp.medium{border-color:#C9A227;color:#B08A12}
+.dcmd{font:400 .78rem var(--mono);background:#0D1120;color:#C9CFE0;border-radius:10px;padding:12px 14px;overflow-x:auto;white-space:nowrap}
+.dcmd span{color:#7FE3D3}
+@media (prefers-reduced-motion:reduce){.bar .fl{transition:none}}
+@media (max-width:860px){.picks{grid-template-columns:1fr}.dres{grid-template-columns:1fr}}
+@media (max-width:560px){.crow{grid-template-columns:54px 1fr}.crow .imp{grid-column:2;justify-self:start}}
 </style>
 
 </head>
@@ -153,7 +208,7 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 <div class="wrap">
   <nav>
     <span class="status mono"><i></i> Infosys · Atlanta, GA</span>
-    <div class="links"><a href="#projects">Projects</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
+    <div class="links"><a href="#terminal">Terminal</a><a href="#projects">Projects</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
   </nav>
 
   <header>
@@ -161,6 +216,7 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
     <div>
       <p class="intro"><strong>Cloud Infrastructure &amp; Identity Architect</strong> and infrastructure project manager. 20+ years delivering secure hybrid cloud, Windows Server, Active Directory and identity solutions across AWS, Azure and Microsoft Entra ID.</p>
       <div class="stack"><span>Entra ID</span><span>Azure</span><span>AWS</span><span>Active Directory</span><span>Terraform</span><span>PowerShell</span><span>Sentinel · KQL</span></div>
+      <div class="cta-row"><a class="btn primary" href="https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf" target="_blank" rel="noopener">Download resume (PDF)</a><a class="btn" href="#terminal">Try the terminal</a></div>
     </div>
   </header>
 
@@ -170,6 +226,16 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
     <div><b>98%</b><span>MFA coverage in the T-Mobile environment</span></div>
     <div><b>500+</b><span>Windows Servers migrated at PG&amp;E</span></div>
   </div>
+
+  <section id="terminal">
+    <div class="head"><h2>Ask my terminal</h2><span class="label">Type a command, or tap one below</span></div>
+    <div class="shell">
+      <div class="shell-bar"><i></i><i></i><i></i><span>akhilesh@portfolio: ~</span></div>
+      <div id="tout" role="log" aria-live="polite"></div>
+      <form class="tline" id="tform" autocomplete="off"><label for="tin">PS C:\akhilesh&gt;</label><input id="tin" type="text" spellcheck="false" aria-label="Terminal command" placeholder="type help"></form>
+      <div class="chips" id="tchips"><button type="button">whoami</button><button type="button">skills</button><button type="button">projects</button><button type="button">experience</button><button type="button">Get-ADUser akhilesh</button><button type="button">contact</button><button type="button">resume</button><button type="button">clear</button></div>
+    </div>
+  </section>
 
   <section id="projects">
     <div class="head"><h2>Projects I've built</h2><span class="label">Tools &amp; reference architecture · 2026</span></div>
@@ -209,6 +275,20 @@ PS&gt; .\CIS_Hardening_AllInOne.ps1
           <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>2,777 lines · 67 functions · 14-chapter reference guide</span><span class="metric">v5.0</span></div>
         </div>
       </article>
+
+      <div class="demo" id="cis-demo">
+        <div><span class="label">Live demo · CIS Hardening Suite</span><h3>Pick a framework and level, see what gets hardened</h3><p class="sub">These are the real 70 controls from the tool's database, filtered the same way the script does.</p></div>
+        <div class="picks">
+          <div class="pick"><span class="label">Framework</span><div class="seg" id="fw"></div></div>
+          <div class="pick"><span class="label">Level</span><div class="seg" id="lv"></div></div>
+          <div class="pick"><span class="label">Platform</span><div class="seg" id="pf"></div></div>
+        </div>
+        <div class="dres">
+          <div class="dsum"><div><div class="big" id="dcount">0</div><span class="label">controls apply</span></div><div class="bars" id="dbars"></div></div>
+          <div class="clist" id="dlist"></div>
+        </div>
+        <div class="dcmd" id="dcmd"></div>
+      </div>
 
       <article class="build">
         <div class="vis">
@@ -328,6 +408,7 @@ PS&gt; .\CIS_Hardening_AllInOne.ps1
       <div><span class="label">Get in touch</span><h2>Need a cloud or identity architect?</h2></div>
       <div class="chan">
         <div><span class="v" id="em">ayyagari.akhilesh@gmail.com</span><button class="copy" id="copyEmail" type="button">Copy</button></div>
+        <div><span class="label">Resume</span><a class="v" href="https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf" target="_blank" rel="noopener">Download PDF ↗</a></div>
         <div><span class="label">LinkedIn</span><a class="v" href="https://www.linkedin.com/in/akhilesh-ayyagari" target="_blank" rel="noopener">linkedin.com/in/akhilesh-ayyagari</a></div>
         <div><span class="label">GitHub</span><a class="v" href="https://github.com/aayyagar" target="_blank" rel="noopener">github.com/aayyagar</a></div>
         <div><span class="label">Location</span><span class="v">Atlanta, GA</span></div>
@@ -338,6 +419,57 @@ PS&gt; .\CIS_Hardening_AllInOne.ps1
   <footer class="mono"><span>© 2026 Akhilesh Ayyagari</span><span>Cloud · Identity · Infrastructure</span></footer>
 </div>
 
+<script>
+(function(){
+/* ---------- CIS demo ---------- */
+var C=[{"id":"PWD-01","cat":"password","name":"Minimum Password Length (14/16/20)","desc":"14+ chars L2, 16+ chars L5, 20+ chars L6","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"both","impact":"low"},{"id":"PWD-02","cat":"password","name":"Password Complexity Enforcement","desc":"Require upper, lower, digit and symbol characters","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"both","impact":"low"},{"id":"PWD-03","cat":"password","name":"Password Maximum Age (60/45/30 days)","desc":"Force rotation every 60 days; tighter at higher levels","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"both","impact":"low"},{"id":"PWD-04","cat":"password","name":"Password History Enforcement (24)","desc":"Prevent reuse of last 24 passwords","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"both","impact":"low"},{"id":"PWD-05","cat":"password","name":"Account Lockout (5 attempts / 30 min)","desc":"Lock account after 5 failures, unlock after 30 minutes","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"both","impact":"medium"},{"id":"PWD-06","cat":"password","name":"Smart Card / PIV Logon Required","desc":"Mandate PIV/CAC smart card for interactive logon (L6)","levels":["L6"],"fw":["cis","nist"],"plat":"windows","impact":"high"},{"id":"PWD-07","cat":"password","name":"Inactive Account Lock (30 days)","desc":"Automatically disable accounts inactive for 30+ days","levels":["L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"both","impact":"medium"},{"id":"PWD-08","cat":"password","name":"Root Account Password Lock (Linux)","desc":"Lock root password — force sudo/key access only (L5/L6)","levels":["L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"high"},{"id":"NET-01","cat":"network","name":"Disable SMBv1","desc":"Remove legacy SMBv1 — EternalBlue / WannaCry vector","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci"],"plat":"windows","impact":"medium"},{"id":"NET-02","cat":"network","name":"Require SMB Signing","desc":"Prevent SMB relay and MITM attacks","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci"],"plat":"windows","impact":"low"},{"id":"NET-03","cat":"network","name":"NTLM Restriction (LmCompat=3→5)","desc":"Restrict to NTLMv2 (L2=3), deny all NTLM (L5+=5)","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"NET-04","cat":"network","name":"LDAP Signing Required","desc":"Require LDAP packet signing — prevent AD MITM","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"NET-05","cat":"network","name":"LDAP Channel Binding","desc":"Enforce LDAP channel binding — prevent downgrade","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"NET-06","cat":"network","name":"Disable LLMNR + mDNS","desc":"Block LLMNR and mDNS — prevent Responder poisoning","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"NET-07","cat":"network","name":"Disable NetBIOS over TCP/IP","desc":"Remove legacy NetBIOS name resolution","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"NET-08","cat":"network","name":"Firewall Default-Deny Inbound","desc":"All profiles: block inbound, allow outbound","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"both","impact":"low"},{"id":"NET-09","cat":"network","name":"Disable Wi-Fi / WLAN (Air-Gap)","desc":"Disable WLAN service and blacklist wireless modules","levels":["L5","L6"],"fw":["cis","nist"],"plat":"both","impact":"high"},{"id":"NET-10","cat":"network","name":"Disable Bluetooth","desc":"Disable Bluetooth services and kernel modules","levels":["L5","L6"],"fw":["cis","nist"],"plat":"both","impact":"medium"},{"id":"NET-11","cat":"network","name":"Kernel Network Sysctl Hardening (Linux)","desc":"23+ sysctl params: disable source routing, log martians, SYN cookies","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"NET-12","cat":"network","name":"Block Unused Network Protocols","desc":"Blacklist dccp, sctp, rds, tipc, ax25, ipx modules","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"NET-13","cat":"network","name":"Restrict Anonymous Access","desc":"Block null session and anonymous SAM enumeration","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"NET-14","cat":"network","name":"Disable IPv6 (Air-Gap)","desc":"Fully disable IPv6 on all interfaces (L6 only)","levels":["L6"],"fw":["cis","nist"],"plat":"both","impact":"high"},{"id":"AUD-01","cat":"audit","name":"Advanced Audit Policies (Windows)","desc":"Enable 10+ subcategories: Logon, Lockout, Policy Change, Privilege Use","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"windows","impact":"low"},{"id":"AUD-02","cat":"audit","name":"PowerShell ScriptBlock Logging","desc":"Log all PowerShell execution — ScriptBlock, Module, Transcript","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci"],"plat":"windows","impact":"low"},{"id":"AUD-03","cat":"audit","name":"auditd + CIS Rules (Linux)","desc":"Install auditd, load rules: identity, exec, privilege, mounts","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"},{"id":"AUD-04","cat":"audit","name":"Event Log Size (512MB Security)","desc":"Set Security log 512MB, System/App 100MB each","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","sox"],"plat":"windows","impact":"low"},{"id":"AUD-05","cat":"audit","name":"WORM Audit Logs (Never Overwrite)","desc":"Set audit logs to never-overwrite mode (L6) — append-only","levels":["L6"],"fw":["cis","nist","sox"],"plat":"both","impact":"high"},{"id":"AUD-06","cat":"audit","name":"rsyslog + SIEM Forwarding","desc":"Install rsyslog, configure remote log forwarding","levels":["L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"linux","impact":"medium"},{"id":"AUD-07","cat":"audit","name":"Process Accounting (psacct/acct)","desc":"Kernel-level process accounting for all executed commands","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"AUD-08","cat":"audit","name":"Sudo Command Logging","desc":"Log all sudo commands to /var/log/sudo.log","levels":["L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"},{"id":"AUD-09","cat":"audit","name":"Login Warning Banners","desc":"Set authorized-use banners on /etc/issue, /etc/issue.net, /etc/motd","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"linux","impact":"low"},{"id":"CRY-01","cat":"crypto","name":"Disable Legacy TLS (1.0/1.1/SSL)","desc":"Disable SSLv2/v3, TLS 1.0 and 1.1; enable TLS 1.2/1.3 only","levels":["L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"windows","impact":"medium"},{"id":"CRY-02","cat":"crypto","name":"Disable Weak Ciphers (RC4/DES/NULL)","desc":"Remove NULL, DES, RC2, RC4, Triple-DES cipher suites","levels":["L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"windows","impact":"medium"},{"id":"CRY-03","cat":"crypto","name":"FIPS 140-2 Mode Enforcement","desc":"Enable FIPS 140-2 compliant algorithms system-wide","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"both","impact":"high"},{"id":"CRY-04","cat":"crypto","name":"NSA Suite B Cipher Suites Only","desc":"Restrict to AES-256-GCM + ECDHE; NIST P-384/P-256 only (L6)","levels":["L6"],"fw":["cis","nist"],"plat":"both","impact":"high"},{"id":"CRY-05","cat":"crypto","name":"Credential Guard (VBS/LSASS)","desc":"Enable Virtualization-Based Security to isolate LSASS","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"CRY-06","cat":"crypto","name":"BitLocker Drive Encryption","desc":"Verify/enforce full-disk encryption on system volume","levels":["L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"windows","impact":"medium"},{"id":"CRY-07","cat":"crypto","name":"LUKS Disk Encryption (Linux)","desc":"Verify LUKS full-disk encryption at provisioning","levels":["L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"medium"},{"id":"CRY-08","cat":"crypto","name":"Disable WDigest (No Cleartext Creds)","desc":"Prevent cleartext credentials from being cached in LSASS","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"SVC-01","cat":"services","name":"Disable Unnecessary Windows Services","desc":"Stop/disable Telnet, SNMP, Fax, RemoteRegistry, MapsBroker, XblGameSave","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"windows","impact":"low"},{"id":"SVC-02","cat":"services","name":"Disable Legacy Linux Services","desc":"Disable telnet, rsh, rlogin, xinetd, avahi-daemon, cups, NIS","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"},{"id":"SVC-03","cat":"services","name":"Harden RDP (TLS + NLA + Timeout)","desc":"Enforce TLS, NLA, high encryption, 15-min idle timeout","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist","pci"],"plat":"windows","impact":"low"},{"id":"SVC-04","cat":"services","name":"Disable Print Spooler (PrintNightmare)","desc":"Disable Spooler service on non-print servers (L5/L6)","levels":["L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"SVC-05","cat":"services","name":"Block All Removable Storage","desc":"Deny USB, CD/DVD, WPD, and floppy access (L5/L6)","levels":["L5","L6"],"fw":["cis","nist"],"plat":"both","impact":"high"},{"id":"SVC-06","cat":"services","name":"Disable RDP Clipboard / Drive Redirect","desc":"Block clipboard, drive, audio, COM, LPT redirection in RDP","levels":["L5","L6"],"fw":["cis","nist","pci"],"plat":"windows","impact":"medium"},{"id":"SVC-07","cat":"services","name":"Disable Windows Telemetry (Level 0)","desc":"Set telemetry Level 0, stop DiagTrack service","levels":["L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"SVC-08","cat":"services","name":"AppLocker Application Whitelisting","desc":"Enable AppLocker in Audit then Enforce mode","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"high"},{"id":"SVC-09","cat":"services","name":"fail2ban Brute-Force Protection","desc":"Install and enable fail2ban for SSH and service protection","levels":["L4","L5","L6"],"fw":["cis","nist","pci"],"plat":"linux","impact":"low"},{"id":"ACC-01","cat":"access","name":"Disable Guest Account","desc":"Disable built-in Windows Guest account","levels":["L4","L5","L6"],"fw":["cis","nist","pci","hipaa","sox"],"plat":"windows","impact":"low"},{"id":"ACC-02","cat":"access","name":"Rename Built-in Administrator","desc":"Rename local Administrator to reduce default-account targeting","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"ACC-03","cat":"access","name":"Strict UAC (Credential Prompt)","desc":"Set UAC to prompt credentials on secure desktop; auto-deny users","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"ACC-04","cat":"access","name":"LSA Protected Process Light (PPL)","desc":"Enable LSA PPL to prevent LSASS memory reading","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"ACC-05","cat":"access","name":"Sudo Hardening (Linux)","desc":"Restrict sudo: PTY, logging, 5-min timeout, no visiblepw","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"ACC-06","cat":"access","name":"SELinux / AppArmor Enforcing Mode","desc":"Set MAC framework to enforcing on Linux","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"ACC-07","cat":"access","name":"su Restricted to wheel Group","desc":"Prevent su to root for non-wheel users via pam_wheel","levels":["L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"ACC-08","cat":"access","name":"Protected Users Group (AD)","desc":"Add Domain Admins to Protected Users — block NTLM/RC4/DES","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"ACC-09","cat":"access","name":"Cron/At Restricted to root","desc":"Create cron.allow/at.allow with root only; delete .deny","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"ACC-10","cat":"access","name":"Password History (pam_pwhistory)","desc":"Enforce last-24-password history via pam_pwhistory module","levels":["L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"},{"id":"KRN-01","cat":"kernel","name":"ASLR + DEP + SEHOP (Windows)","desc":"Enable system-wide memory protections: ASLR, DEP, SEHOP","levels":["L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"KRN-02","cat":"kernel","name":"Kernel ASLR (randomize_va_space=2)","desc":"Full ASLR: randomize stack, heap, and library positions","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"KRN-03","cat":"kernel","name":"/proc hidepid=2 Restriction","desc":"Hide other users processes from /proc (Linux L5/L6)","levels":["L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"KRN-04","cat":"kernel","name":"/tmp + /dev/shm Hardened Mounts","desc":"Mount /tmp and /dev/shm with noexec, nosuid, nodev","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"KRN-05","cat":"kernel","name":"Core Dumps Disabled","desc":"Disable core dumps via limits.conf and fs.suid_dumpable=0","levels":["L2","L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"KRN-06","cat":"kernel","name":"Disable Kernel Module Loading (L6)","desc":"Permanently block new kernel module loading (Air-Gap)","levels":["L6"],"fw":["cis","nist"],"plat":"linux","impact":"high"},{"id":"KRN-07","cat":"kernel","name":"HVCI / Memory Integrity (Windows)","desc":"Enable Hypervisor-Protected Code Integrity","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"medium"},{"id":"KRN-08","cat":"kernel","name":"Secure Boot Verification","desc":"Verify Secure Boot is active in UEFI firmware","levels":["L4","L5","L6"],"fw":["cis","nist"],"plat":"windows","impact":"low"},{"id":"KRN-09","cat":"kernel","name":"AIDE File Integrity Monitoring","desc":"Install AIDE, initialize baseline, daily cron check","levels":["L3","L4","L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"},{"id":"KRN-10","cat":"kernel","name":"Blacklist Unused Filesystem Types","desc":"Blacklist cramfs, hfs, hfsplus, squashfs, udf, jffs2","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"low"},{"id":"KRN-11","cat":"kernel","name":"ptrace Restriction (yama scope=1)","desc":"Restrict ptrace to parent processes only","levels":["L3","L4","L5","L6"],"fw":["cis","nist"],"plat":"linux","impact":"medium"},{"id":"KRN-12","cat":"kernel","name":"Shell Auto-Logout Timeout (600s)","desc":"Set TMOUT=600 readonly for all shell sessions","levels":["L5","L6"],"fw":["cis","nist","pci","hipaa"],"plat":"linux","impact":"low"}];
+var FW=[['cis','CIS'],['nist','NIST 800-53'],['pci','PCI-DSS'],['hipaa','HIPAA'],['sox','SOX']];
+var LV=[['L2','L2'],['L3','L3'],['L4','L4 STIG'],['L5','L5 Zero Trust'],['L6','L6 NSA']];
+var PF=[['windows','Windows'],['linux','Linux']];
+var CAT={password:'Auth',network:'Network',audit:'Audit',crypto:'Crypto',services:'Services',access:'Access',kernel:'Kernel'};
+var st={fw:'cis',lv:'L4',pf:'windows'};
+function seg(id,opts,key){var el=document.getElementById(id);opts.forEach(function(o){var iid=id+'-'+o[0];var inp=document.createElement('input');inp.type='radio';inp.name=id;inp.id=iid;inp.value=o[0];if(st[key]===o[0])inp.checked=true;inp.addEventListener('change',function(){st[key]=o[0];render()});var lb=document.createElement('label');lb.htmlFor=iid;lb.textContent=o[1];el.appendChild(inp);el.appendChild(lb)})}
+function esc(t){return t.replace(/[&<>]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function render(){
+  var r=C.filter(function(c){return c.fw.indexOf(st.fw)>-1&&c.levels.indexOf(st.lv)>-1&&(c.plat===st.pf||c.plat==='both')});
+  document.getElementById('dcount').textContent=r.length;
+  var counts={};Object.keys(CAT).forEach(function(k){counts[k]=0});r.forEach(function(c){counts[c.cat]=(counts[c.cat]||0)+1});
+  var mx=Math.max.apply(null,Object.keys(counts).map(function(k){return counts[k]}).concat([1]));
+  document.getElementById('dbars').innerHTML=Object.keys(CAT).map(function(k){return '<div class="bar"><span>'+CAT[k]+'</span><div class="tr"><div class="fl" style="width:'+(counts[k]/mx*100)+'%"></div></div><b>'+counts[k]+'</b></div>'}).join('');
+  document.getElementById('dlist').innerHTML=r.length?r.map(function(c){return '<div class="crow"><span class="id">'+c.id+'</span><div><b>'+esc(c.name)+'</b><span class="ds">'+esc(c.desc)+'</span></div><span class="imp '+c.impact+'">'+c.impact+' impact</span></div>'}).join(''):'<div class="crow"><span class="id">—</span><div><b>No controls for this combination</b><span class="ds">Try another framework or level.</span></div></div>';
+  var fwn=FW.filter(function(f){return f[0]===st.fw})[0][1];
+  document.getElementById('dcmd').innerHTML=(st.pf==='windows'?'PS&gt; .\\CIS_Hardening_AllInOne.ps1':'$ sudo pwsh ./CIS_Hardening_AllInOne.ps1')+'  <span># '+fwn+' · '+st.lv+' · '+r.length+' controls → HTML report</span>';
+}
+seg('fw',FW,'fw');seg('lv',LV,'lv');seg('pf',PF,'pf');render();
+
+/* ---------- terminal ---------- */
+var out=document.getElementById('tout'),inp=document.getElementById('tin'),hist=[],hi=0;
+var RES='https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf';
+var CMDS={
+ help:'<span class="k">Available commands</span>\n  whoami            who I am\n  skills            core toolkit\n  projects          things I have built\n  experience        career timeline\n  Get-ADUser akhilesh   my AD object, naturally\n  contact           how to reach me\n  resume            download my resume\n  clear             clear the screen',
+ whoami:'Akhilesh Ayyagari\nCloud Infrastructure &amp; Identity Architect · Infrastructure Project Manager\n20+ years · Atlanta, GA · currently Domain Architect at T-Mobile (via Infosys)',
+ skills:'<span class="k">Identity</span>   Entra ID · Conditional Access · PIM · RBAC · OAuth/OIDC · Okta · AD multi-forest\n<span class="k">Cloud</span>      Azure · AWS · Route 53 · Terraform · PowerShell · Azure DevOps\n<span class="k">Security</span>   Sentinel · KQL · Tenable · CIS L1/L2 · NIST · SSL/TLS lifecycle\n<span class="k">Infra</span>      Windows Server · WSUS · SCCM · VMware · Hyper-V · HP ProLiant',
+ projects:'<span class="k">[1]</span> CIS Benchmark Hardening Suite   70+ controls · L2–L6 · 5 frameworks  <a href="#cis-demo">try the demo</a>\n<span class="k">[2]</span> Enterprise AD Security Architecture   70 sections · 12 parts  <a href="#projects">read more</a>',
+ experience:'<span class="d">HEAD</span>    2021–now  Infosys · T-Mobile, Morgan Stanley, Tractor Supply, PG&amp;E, Empire State Building\n<span class="d">2020</span>    State of Kansas · Infrastructure Solutions Engineer\n<span class="d">2019</span>    LA County Public Works · Senior Windows Engineer, Security\n<span class="d">2017</span>    WV Office of Technology · Bloomberg · Facorne\n<span class="d">2003</span>    HP ProLiant, AD and network roles',
+ 'get-aduser akhilesh':'DistinguishedName : CN=Akhilesh Ayyagari,OU=Architects,OU=Tier0,DC=portfolio,DC=io\nEnabled           : True\nTitle             : Cloud Infrastructure &amp; Identity Architect\nMFA               : Enforced\nMemberOf          : {Identity, Cloud, Security, Delivery}\nYearsExperience   : 20+\nStatus            : <span class="p">Open to conversations</span>',
+ contact:'email     ayyagari.akhilesh@gmail.com\nlinkedin  <a href="https://www.linkedin.com/in/akhilesh-ayyagari" target="_blank" rel="noopener">linkedin.com/in/akhilesh-ayyagari</a>\ngithub    <a href="https://github.com/aayyagar" target="_blank" rel="noopener">github.com/aayyagar</a>',
+ resume:'Resume ready → <a href="'+RES+'" target="_blank" rel="noopener">Akhilesh_Ayyagari_Resume.pdf</a>',
+ ls:'projects/  experience/  skills/  resume.pdf',
+ 'sudo rm -rf /':'<span class="e">Access denied.</span> Least privilege is kind of my thing.',
+ sudo:'<span class="e">Access denied.</span> Request just-in-time access through PIM first.'
+};
+function print(h){out.insertAdjacentHTML('beforeend',h+'\n');out.scrollTop=out.scrollHeight}
+function run(raw){var c=raw.trim();if(!c)return;print('<span class="p">PS C:\\akhilesh&gt;</span> '+esc(c));var k=c.toLowerCase();
+ if(k==='clear'||k==='cls'){out.innerHTML='';return}
+ if(CMDS[k]){print(CMDS[k]);return}
+ if(k.indexOf('sudo')===0){print(CMDS.sudo);return}
+ print('<span class="e">'+esc(c)+'</span>: command not found. Type <span class="k">help</span> to see what I can do.')}
+document.getElementById('tform').addEventListener('submit',function(e){e.preventDefault();var v=inp.value;if(v.trim()){hist.push(v);hi=hist.length}run(v);inp.value=''});
+inp.addEventListener('keydown',function(e){if(e.key==='ArrowUp'&&hi>0){hi--;inp.value=hist[hi];e.preventDefault()}else if(e.key==='ArrowDown'){hi=Math.min(hist.length,hi+1);inp.value=hist[hi]||'';e.preventDefault()}});
+Array.prototype.forEach.call(document.querySelectorAll('#tchips button'),function(b){b.addEventListener('click',function(){run(b.textContent)})});
+print('<span class="d">Windows PowerShell · akhilesh@portfolio</span>');run('whoami');print('\nType <span class="k">help</span> for commands.');
+})();
+</script>
 <script>
 document.getElementById('copyEmail').addEventListener('click',function(){
   var b=this,t=document.getElementById('em').textContent;
