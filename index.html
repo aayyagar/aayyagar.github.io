@@ -238,7 +238,7 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">Tools &amp; reference architecture · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">9 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
 
       <article class="build">
@@ -412,6 +412,116 @@ PS&gt; .\CIS_Hardening_AllInOne.ps1
           </ul>
           <div class="stack" style="margin-top:0"><span>Active Directory</span><span>Entra ID</span><span>Kerberos</span><span>ADCS</span><span>Sentinel · KQL</span><span>WSUS · SCCM · SSM</span><span>PowerShell</span></div>
           <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Version 1.0 · June 2026</span><span class="metric">70 sections</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">Terraform · Azure + AWS</span>
+          <div class="kpis">
+            <div><b>2</b><span>clouds, one baseline</span></div>
+            <div><b>4</b><span>control domains</span></div>
+            <div><b>modular</b><span>adopt per piece</span></div>
+          </div>
+<div class="term"><span class="c"># same controls, both clouds</span>
+azure/   hub-spoke · Sentinel · policy · roles
+aws/     VPC · CloudTrail · GuardDuty · Config
+<span class="ok">  + least-privilege roles</span>
+<span class="ok">  + central security logging</span>
+<span class="ok">  + guardrails (deny / detect)</span></div>
+        </div>
+        <div class="body">
+          <h3>Hybrid Cloud Landing Zone</h3>
+          <p>Terraform that gives a new Azure subscription and AWS account the same secure baseline: networking, central logging, least-privilege roles and guardrails.</p>
+          <ul>
+            <li><b>Azure:</b> hub-and-spoke network, Log Analytics onto Microsoft Sentinel, Azure Policy guardrails, custom roles that can't change RBAC or policy.</li>
+            <li><b>AWS:</b> VPC with flow logs, CloudTrail + GuardDuty + Config, MFA-gated IAM roles, account-level public-access block.</li>
+            <li><b>Modular:</b> take the logging module alone to add Sentinel, or networking alone for a hub-and-spoke.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://github.com/aayyagar/hybrid-landing-zone" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Infrastructure as Code · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · TLS</span>
+          <div class="kpis">
+            <div><b>30/14/7</b><span>day alert bands</span></div>
+            <div><b>3</b><span>source types</span></div>
+            <div><b>0</b><span>changes made</span></div>
+          </div>
+<div class="term"><span class="c"># scan endpoints, IIS and the cert store</span>
+PS&gt; .\Invoke-CertExpiryScan.ps1 -Demo
+<span class="w">  [Expired ]   -4d  legacy.contoso.com:443</span>
+<span class="w">  [Urgent  ]    5d  vpn.contoso.com:443</span>
+<span class="w">  [Critical]   11d  mail.contoso.com:993</span>
+  Dashboard: CertScan.html</div>
+        </div>
+        <div class="body">
+          <h3>Certificate Expiry Monitor</h3>
+          <p>A read-only PowerShell tool that scans TLS/SSL certificates across endpoints, IIS and the Windows store and warns before they expire, with a clean dashboard.</p>
+          <ul>
+            <li><b>Catches real outages:</b> a missed renewal on a DNS, IIS, VPN or load-balancer endpoint takes a service down; this makes expiry visible early.</li>
+            <li><b>Alert bands at 30 / 14 / 7 days,</b> plus a separate flag for unreachable hosts so a down endpoint is never mistaken for healthy.</li>
+            <li><b>Runs on a schedule</b> and exits non-zero when something is expiring, so it wires into monitoring.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/cert-expiry-monitor/sample-report/" target="_blank" rel="noopener">View dashboard</a><a class="btn" href="https://github.com/aayyagar/cert-expiry-monitor" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>From real certificate-lifecycle work · MIT</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · Azure + AWS</span>
+          <div class="kpis">
+            <div><b>1</b><span>report, both clouds</span></div>
+            <div><b>9</b><span>risk flags</span></div>
+            <div><b>0</b><span>changes made</span></div>
+          </div>
+<div class="term"><span class="c"># who can do the most damage?</span>
+PS&gt; .\Invoke-AccessReview.ps1 -Demo
+<span class="w">  [Critical] AWS   deploy-bot  (admin, no MFA)</span>
+<span class="w">  [Critical] Azure guest w/ User Access Admin</span>
+<span class="w">  [High    ] Azure standing Global Admin</span></div>
+        </div>
+        <div class="body">
+          <h3>Multi-cloud Access Review</h3>
+          <p>A read-only review of privileged access across Entra ID/Azure and AWS in one report, flagging the grants worth reviewing first.</p>
+          <ul>
+            <li><b>Finds the risky ones:</b> guest admins, standing (non-JIT) access, stale admins, apps with takeover-level permissions, AWS AdministratorAccess, missing MFA and old access keys.</li>
+            <li><b>One view across clouds,</b> sorted by severity, with expected cases like break-glass accounts marked low so real issues stand out.</li>
+            <li><b>Read-only:</b> Microsoft Graph and AWS IAM, Security Reader access is enough.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/multicloud-access-review/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/multicloud-access-review" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Identity governance · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">Python · SAST + CVE</span>
+          <div class="kpis">
+            <div><b>2</b><span>critical CVEs caught</span></div>
+            <div><b>20+</b><span>code rules</span></div>
+            <div><b>CI</b><span>exit codes</span></div>
+          </div>
+<div class="term"><span class="c"># version/CVE check + source scan</span>
+$ php_vuln_scanner.py --demo
+<span class="w">  [Critical] CVE-2026-109618  RCE (OOM)</span>
+<span class="w">  [Critical] SQLI-02  SQL injection  index.php:4</span>
+<span class="w">  [Critical] CMDI-01  command injection</span></div>
+        </div>
+        <div class="body">
+          <h3>PHP Vulnerability Scanner</h3>
+          <p>A Python tool that checks a PHP codebase two ways: its version against known CVEs, and its source for insecure code patterns.</p>
+          <ul>
+            <li><b>Catches the October 2026 advisories:</b> the two unauthenticated-RCE CVEs (CVE-2026-109618/109619) and end-of-life PHP branches.</li>
+            <li><b>Source scan (SAST):</b> SQL injection, command injection, XSS, file inclusion, insecure deserialization, weak crypto and hardcoded secrets, each with a CWE and a fix.</li>
+            <li><b>CI-ready:</b> scored HTML report, JSON export, and a non-zero exit code to gate a pipeline. Self-tested.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/php-vuln-scanner/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/php-vuln-scanner" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>No dependencies · MIT license</span><span class="metric">v1.0.0</span></div>
         </div>
       </article>
 
