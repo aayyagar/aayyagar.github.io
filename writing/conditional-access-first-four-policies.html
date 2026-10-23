@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="The four Conditional Access policies every Microsoft Entra ID tenant should deploy first, why they matter, and how to roll them out without locking anyone out.">
+<title>Conditional Access: The First Four Policies — Akhilesh Ayyagari</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F3F6; --surface:#FFFFFF; --ink:#151A2C; --muted:#5B6278; --line:#DCDFE7;
+  --accent:#0E8F80; --accent-soft:#D5EFEB; --warm:#E2643A;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font-family:var(--mono);font-size:.8rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;letter-spacing:-.03em;margin:.3em 0 .25em;text-wrap:balance}
+.meta{color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+article h2{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.02em;margin:1.7em 0 .5em;text-wrap:balance}
+article h3{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:1.4em 0 .4em}
+article p{margin:0 0 1.1em}
+article ul,article ol{margin:0 0 1.2em;padding-left:1.3em}
+article li{margin:.35em 0}
+article strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--ink);padding:1px 6px;border-radius:5px}
+pre{background:#0D1120;color:#C9CFE0;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font:400 .82rem/1.6 var(--mono);margin:0 0 1.3em}
+pre code{background:none;color:inherit;padding:0}
+blockquote{margin:0 0 1.3em;padding:2px 0 2px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warm);border-radius:10px;padding:14px 18px;margin:0 0 1.3em}
+.callout b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin:0 0 1.3em;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0}
+.tags span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+footer{margin-top:40px;padding:26px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer a{font-weight:600}
+.backlink{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="../index.html#writing">← Akhilesh Ayyagari</a><a href="../index.html#projects">Projects</a></nav>
+  <p class="eyebrow">Microsoft Entra ID · Identity</p>
+  <h1>Conditional Access: The First Four Policies</h1>
+  <div class="meta">October 2026 · 6 min read · by Akhilesh Ayyagari</div>
+  <article>
+<p>Conditional Access is the policy engine at the heart of Microsoft Entra ID. It evaluates every sign-in — who, from where, on what device, at what risk — and decides whether to allow it, block it, or require more proof. You can build dozens of policies, but four of them deliver most of the risk reduction. Here is where to start, and how to do it safely.</p>
+
+<div class="callout"><b>Before anything else: break-glass accounts.</b> Create two cloud-only emergency-access accounts with long random credentials, exclude them from every policy, and alert when they sign in. They are your insurance against locking yourself out. Never deploy a Conditional Access policy without this exclusion in place.</div>
+
+<h2>1. Block legacy authentication</h2>
+<p>Legacy protocols — POP, IMAP, SMTP AUTH, older Office clients — cannot perform multi-factor authentication. Microsoft's own data shows the overwhelming majority of password-spray attacks come through them. As long as legacy auth is open, your MFA can be bypassed entirely.</p>
+<p><strong>The policy:</strong> for all users, client apps "Exchange ActiveSync clients" and "Other clients," grant = Block.</p>
+<p><strong>Watch for:</strong> multifunction printers that scan-to-email, and old mail clients. Check the sign-in logs filtered by client app before you enforce, and migrate those few devices to modern auth.</p>
+
+<h2>2. Require phishing-resistant MFA for administrators</h2>
+<p>Admin accounts are the prize. And not all MFA is equal: push notifications and one-time codes can be relayed through an adversary-in-the-middle proxy. <strong>Phishing-resistant</strong> methods — FIDO2 security keys, passkeys, Windows Hello for Business, certificates — are bound to the real sign-in site and cannot be relayed.</p>
+<p><strong>The policy:</strong> target the admin directory roles, grant = require the built-in "Phishing-resistant MFA" authentication strength.</p>
+<p><strong>Watch for:</strong> admins without a key enrolled. Issue FIDO2 keys first, and use a Temporary Access Pass to bootstrap registration, or you will lock your admins out.</p>
+
+<h2>3. Require MFA for all users</h2>
+<p>This is the big one. MFA blocks the large majority of account-takeover attacks that rely on a stolen or guessed password. The order matters: block legacy auth <em>first</em> (policy 1), or attackers simply route around MFA through legacy protocols.</p>
+<p><strong>The policy:</strong> all users, all cloud apps, grant = require MFA. Exclude your break-glass group and your directory-sync service account.</p>
+<p><strong>Watch for:</strong> users who have never registered an MFA method. Run a registration campaign, and consider deploying this in report-only mode first (see below).</p>
+
+<h2>4. Require a compliant or hybrid-joined device for desktops</h2>
+<p>Stolen credentials and session tokens are far less useful if access also requires a known, healthy device. This is the step from "MFA everywhere" toward real Zero Trust.</p>
+<p><strong>The policy:</strong> for Windows and macOS, grant = require device to be Intune compliant or Microsoft Entra hybrid joined.</p>
+<p><strong>Watch for:</strong> this one has the biggest blast radius. Personal and unmanaged machines lose access. Roll out device enrollment and compliance policies first, and keep this in report-only until the logs show near-full compliance.</p>
+
+<h2>The golden rule: report-only first</h2>
+<p>Every Conditional Access policy supports a <strong>report-only</strong> mode. The policy is evaluated on every sign-in and logged — showing exactly who it <em>would</em> have affected — but nothing is blocked. Deploy new policies in report-only, watch the sign-in logs for one to two weeks, confirm you are not about to break a legitimate workflow, then flip them on one at a time.</p>
+
+<h2>A sensible rollout order</h2>
+<ol>
+<li>Create break-glass accounts and their exclusion group.</li>
+<li>Deploy all four policies in report-only.</li>
+<li>Review the report-only results; fix what would break (legacy devices, unregistered users).</li>
+<li>Enforce in order: block legacy → admin MFA → all-user MFA → compliant device.</li>
+</ol>
+<p>Four policies, deployed carefully, take a tenant from "password is the only thing standing between an attacker and your data" to a posture that blocks the attacks that actually happen. Start with break-glass, go report-only, and turn them on one by one.</p>
+  </article>
+  <div class="tags"><span>Entra ID</span><span>Conditional Access</span><span>MFA</span><span>Zero Trust</span><span>Identity</span></div>
+  <footer>
+    Written by <strong>Akhilesh Ayyagari</strong>, Cloud Infrastructure &amp; Identity Architect.
+    <a class="backlink" href="../index.html">See more work and projects →</a>
+  </footer>
+</div>
+</body>
+</html>

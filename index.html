@@ -201,6 +201,14 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 @media (prefers-reduced-motion:reduce){.bar .fl{transition:none}}
 @media (max-width:860px){.picks{grid-template-columns:1fr}.dres{grid-template-columns:1fr}}
 @media (max-width:560px){.crow{grid-template-columns:54px 1fr}.crow .imp{grid-column:2;justify-self:start}}
+.writing{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.post{display:flex;flex-direction:column;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;text-decoration:none;color:inherit;transition:transform .2s ease,border-color .2s ease}
+.post:hover{transform:translateY(-3px);border-color:var(--accent)}
+.post .pe{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--accent)}
+.post h3{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:0;letter-spacing:-.01em;line-height:1.1}
+.post p{margin:0;color:var(--muted);font-size:.92rem}
+.post .pm{margin-top:auto;padding-top:8px;font-family:var(--mono);font-size:.72rem;color:var(--muted)}
+@media (max-width:700px){.writing{grid-template-columns:1fr}}
 </style>
 
 </head>
@@ -208,7 +216,7 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 <div class="wrap">
   <nav>
     <span class="status mono"><i></i> Infosys · Atlanta, GA</span>
-    <div class="links"><a href="#terminal">Terminal</a><a href="#projects">Projects</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
+    <div class="links"><a href="#terminal">Terminal</a><a href="#projects">Projects</a><a href="#writing">Writing</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
   </nav>
 
   <header>
@@ -238,7 +246,7 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">9 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">11 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
 
       <article class="build">
@@ -525,6 +533,61 @@ $ php_vuln_scanner.py --demo
         </div>
       </article>
 
+      <article class="build">
+        <div class="vis">
+          <span class="pill">KQL · Microsoft Sentinel</span>
+          <div class="kpis">
+            <div><b>24</b><span>detection rules</span></div>
+            <div><b>8</b><span>ATT&amp;CK tactics</span></div>
+            <div><b>3</b><span>data sources</span></div>
+          </div>
+<div class="term"><span class="c"># one rule per attack, MITRE-mapped</span>
+AD-001  Password spray        🟠 High
+AD-013  DCSync from non-DC    🔴 Critical
+AD-011  Kerberoasting (RC4)   🟠 High
+AD-018  New federation trust  🔴 Critical
+AD-009  Risky OAuth consent   🟠 High</div>
+        </div>
+        <div class="body">
+          <h3>Sentinel KQL Detection Pack</h3>
+          <p>24 ready-to-use Microsoft Sentinel detection rules for Active Directory and Entra ID attacks, each with a severity, a MITRE ATT&amp;CK mapping, the entities it surfaces and false-positive tuning notes.</p>
+          <ul>
+            <li><b>Covers the real attacks:</b> password spray, MFA fatigue, impossible travel, Kerberoasting, AS-REP, DCSync, Golden Ticket, consent phishing and federation backdoors.</li>
+            <li><b>Deploy-ready:</b> paste into a scheduled analytics rule, map the listed entities, set the severity, and tune the thresholds to your tenant.</li>
+            <li><b>Built on</b> the KQL library from the AD Security Architecture guide.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://github.com/aayyagar/sentinel-kql-detections" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>SecOps · detection engineering · MIT</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · WSUS / SCCM</span>
+          <div class="kpis">
+            <div><b>by group</b><span>compliance view</span></div>
+            <div><b>CVE</b><span>rollup</span></div>
+            <div><b>0</b><span>changes made</span></div>
+          </div>
+<div class="term"><span class="c"># read-only patch status</span>
+PS&gt; .\Invoke-PatchComplianceReport.ps1 -Demo
+  Compliance: 17% (2/12 servers)
+<span class="w">  [Critical] APP01   22 missing (5 critical)</span>
+<span class="w">  [Stale   ] APP02   not reporting 19d</span></div>
+        </div>
+        <div class="body">
+          <h3>Patch Compliance Dashboard</h3>
+          <p>A read-only PowerShell tool that turns WSUS patch status into a clear compliance dashboard: an overall score, compliance by server group, the servers furthest behind, and the critical CVEs still open.</p>
+          <ul>
+            <li><b>Surfaces what matters:</b> who is missing security updates right now, which servers stopped reporting, and which open CVEs to prioritize.</li>
+            <li><b>Source-agnostic:</b> query WSUS directly or feed a CSV export from SCCM, Intune or AWS Systems Manager.</li>
+            <li><b>From real patch-management work</b> on large Windows fleets.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/patch-compliance-dashboard/sample-report/" target="_blank" rel="noopener">View dashboard</a><a class="btn" href="https://github.com/aayyagar/patch-compliance-dashboard" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>WSUS · SCCM · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
+
     </div>
   </section>
 
@@ -597,6 +660,36 @@ $ php_vuln_scanner.py --demo
         <div><h3>Windows Firewall Administrator · <span class="co">Bloomberg</span></h3><p>Reviewed and cleaned up rule sets across five firewall platforms and contributed to audit reports.</p></div></div>
       <div class="commit"><span class="mono"><span class="hash">2003–17</span></span>
         <div><h3>Earlier roles · <span class="co">Facorne, Takshshila, Medphoenix, SK International (HP Silver Partner)</span></h3><p>Deep HP ProLiant hardware, Active Directory, WSUS/SCCM patch compliance, Citrix and secured cloud server environments.</p></div></div>
+    </div>
+  </section>
+
+<section id="writing">
+    <div class="head"><h2>Writing</h2><span class="label">Field notes on identity &amp; AD security</span></div>
+    <div class="writing">
+      <a class="post" href="writing/ad-tiering-in-5-steps.html">
+        <span class="pe">Active Directory</span>
+        <h3>AD Tiering in 5 Steps</h3>
+        <p>The highest-impact change you can make to an AD environment, rolled out in five concrete steps that cut the path to Domain Admin.</p>
+        <span class="pm">7 min read</span>
+      </a>
+      <a class="post" href="writing/adcs-esc1-explained-simply.html">
+        <span class="pe">Certificate Services</span>
+        <h3>ADCS ESC1, Explained Simply</h3>
+        <p>How a normal user becomes a Domain Admin through one misconfigured certificate template, and the checkbox that fixes it.</p>
+        <span class="pm">6 min read</span>
+      </a>
+      <a class="post" href="writing/conditional-access-first-four-policies.html">
+        <span class="pe">Microsoft Entra ID</span>
+        <h3>Conditional Access: The First Four Policies</h3>
+        <p>The four policies every tenant should deploy first, and how to roll them out in report-only mode without locking anyone out.</p>
+        <span class="pm">6 min read</span>
+      </a>
+      <a class="post" href="writing/kerberoasting-how-it-works.html">
+        <span class="pe">Credential Access</span>
+        <h3>Kerberoasting: How It Works, How to Stop It</h3>
+        <p>How the attack turns a normal account into cracked service-account passwords, and the defense that makes it produce nothing useful.</p>
+        <span class="pm">6 min read</span>
+      </a>
     </div>
   </section>
 

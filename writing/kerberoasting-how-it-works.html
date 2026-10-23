@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="How the Kerberoasting attack turns a normal domain account into cracked service-account passwords, and the concrete steps that defeat it.">
+<title>Kerberoasting: How It Works, How to Stop It — Akhilesh Ayyagari</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F3F6; --surface:#FFFFFF; --ink:#151A2C; --muted:#5B6278; --line:#DCDFE7;
+  --accent:#0E8F80; --accent-soft:#D5EFEB; --warm:#E2643A;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font-family:var(--mono);font-size:.8rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;letter-spacing:-.03em;margin:.3em 0 .25em;text-wrap:balance}
+.meta{color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+article h2{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.02em;margin:1.7em 0 .5em;text-wrap:balance}
+article h3{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:1.4em 0 .4em}
+article p{margin:0 0 1.1em}
+article ul,article ol{margin:0 0 1.2em;padding-left:1.3em}
+article li{margin:.35em 0}
+article strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--ink);padding:1px 6px;border-radius:5px}
+pre{background:#0D1120;color:#C9CFE0;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font:400 .82rem/1.6 var(--mono);margin:0 0 1.3em}
+pre code{background:none;color:inherit;padding:0}
+blockquote{margin:0 0 1.3em;padding:2px 0 2px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warm);border-radius:10px;padding:14px 18px;margin:0 0 1.3em}
+.callout b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin:0 0 1.3em;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0}
+.tags span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+footer{margin-top:40px;padding:26px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer a{font-weight:600}
+.backlink{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="../index.html#writing">← Akhilesh Ayyagari</a><a href="../index.html#projects">Projects</a></nav>
+  <p class="eyebrow">Active Directory · Credential Access</p>
+  <h1>Kerberoasting: How It Works, How to Stop It</h1>
+  <div class="meta">October 2026 · 6 min read · by Akhilesh Ayyagari</div>
+  <article>
+<p>Kerberoasting is one of the most reliable attacks in Active Directory because it abuses Kerberos working exactly as designed. Any authenticated domain user can do it, it is quiet, and it often ends with a cracked service-account password that has admin rights. Here is how it works and, more importantly, how to make it fail.</p>
+
+<h2>A quick Kerberos refresher</h2>
+<p>When a user wants to use a service in AD, they ask a Domain Controller for a <strong>service ticket</strong> (a TGS) for that service. The DC encrypts part of that ticket with the password hash of the account the service runs under. The user's machine then presents the ticket to the service, which can decrypt it because it knows its own password.</p>
+<p>The weak link: <strong>the DC hands out that ticket to anyone who asks</strong>, and part of it is encrypted with the service account's password. If that password is weak, an attacker can crack it offline.</p>
+
+<h2>The attack in four steps</h2>
+<ol>
+<li>An attacker with any domain account asks AD for the accounts that have a Service Principal Name (SPN) set — these are the service accounts.</li>
+<li>They request service tickets for those accounts. This is a normal Kerberos operation; it raises no alarms by itself.</li>
+<li>They extract the encrypted portion of each ticket and take it offline.</li>
+<li>They run a password cracker against it. There is no lockout and no network traffic — they can try billions of guesses on their own hardware. A weak or reused service-account password falls in minutes.</li>
+</ol>
+<p>Because service accounts are often old, have non-expiring passwords, and frequently hold elevated rights, a single cracked account can mean a big step toward domain compromise.</p>
+
+<div class="callout"><b>Why it is so effective:</b> the attack needs nothing but a normal domain account, generates ordinary-looking Kerberos traffic, and the cracking happens entirely offline where no defense can see it. The whole game is decided by the strength of the service-account password.</div>
+
+<h2>How to stop it</h2>
+<p>You cannot stop users from requesting tickets — that is Kerberos. So you make the cracked ticket worthless by making the password impossible to crack.</p>
+
+<h3>1. Use group Managed Service Accounts (gMSA)</h3>
+<p>This is the real fix. A gMSA has a 120+ character password that Active Directory generates and rotates automatically every 30 days. No human knows it, and it cannot be cracked in any practical time. Migrate service accounts to gMSAs wherever the application supports them.</p>
+
+<h3>2. For accounts that cannot be gMSAs, use very long passwords</h3>
+<p>Where an application forces a traditional account, give it a <strong>25+ character random password</strong>. Kerberoasting relies on cracking being feasible; a long random password pushes the cracking time beyond the life of the universe.</p>
+
+<h3>3. Remove unnecessary SPNs and privileges</h3>
+<p>An account only shows up to Kerberoasting if it has an SPN. Audit your SPNs and remove ones that are no longer needed. And no service account should be in Domain Admins — if a cracked service account is just a service account, the damage is contained.</p>
+
+<h3>4. Disable RC4 for Kerberos</h3>
+<p>Attackers prefer RC4-encrypted tickets because they crack faster than AES. Enforcing AES encryption for Kerberos tickets raises the cost of the attack.</p>
+
+<h2>How to detect it</h2>
+<p>The signature is one account requesting many service tickets in a short time, especially with RC4 encryption. In Windows this is event <strong>4769</strong> (a Kerberos service ticket was requested). A detection groups 4769 events by requesting account and flags anyone pulling tickets for many distinct services with RC4 — the fingerprint of a harvest.</p>
+<pre><code>SecurityEvent
+| where EventID == 4769
+| where TicketEncryptionType == "0x17"   // RC4
+| where ServiceName !endswith "$" and ServiceName != "krbtgt"
+| summarize Services = dcount(ServiceName) by Account, bin(TimeGenerated, 1h)
+| where Services >= 10</code></pre>
+<p>Tune the threshold to your environment — vulnerability scanners and some legacy apps request many tickets legitimately.</p>
+
+<h2>The takeaway</h2>
+<p>Kerberoasting is not a bug to patch; it is a design property of Kerberos that punishes weak service-account passwords. The defense is equally simple to state: <strong>no crackable service-account passwords.</strong> Move to gMSAs, use 25+ character passwords where you cannot, strip unneeded SPNs and privileges, and watch event 4769 for the harvest. Do that, and the attack still runs — it just never produces anything useful.</p>
+  </article>
+  <div class="tags"><span>Kerberos</span><span>Kerberoasting</span><span>gMSA</span><span>Active Directory</span><span>Detection</span></div>
+  <footer>
+    Written by <strong>Akhilesh Ayyagari</strong>, Cloud Infrastructure &amp; Identity Architect.
+    <a class="backlink" href="../index.html">See more work and projects →</a>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A practical, five-step guide to implementing the Active Directory tiered administration model to stop credential theft and lateral movement.">
+<title>AD Tiering in 5 Steps — Akhilesh Ayyagari</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F3F6; --surface:#FFFFFF; --ink:#151A2C; --muted:#5B6278; --line:#DCDFE7;
+  --accent:#0E8F80; --accent-soft:#D5EFEB; --warm:#E2643A;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font-family:var(--mono);font-size:.8rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;letter-spacing:-.03em;margin:.3em 0 .25em;text-wrap:balance}
+.meta{color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+article h2{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.02em;margin:1.7em 0 .5em;text-wrap:balance}
+article h3{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:1.4em 0 .4em}
+article p{margin:0 0 1.1em}
+article ul,article ol{margin:0 0 1.2em;padding-left:1.3em}
+article li{margin:.35em 0}
+article strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--ink);padding:1px 6px;border-radius:5px}
+pre{background:#0D1120;color:#C9CFE0;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font:400 .82rem/1.6 var(--mono);margin:0 0 1.3em}
+pre code{background:none;color:inherit;padding:0}
+blockquote{margin:0 0 1.3em;padding:2px 0 2px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warm);border-radius:10px;padding:14px 18px;margin:0 0 1.3em}
+.callout b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin:0 0 1.3em;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0}
+.tags span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+footer{margin-top:40px;padding:26px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer a{font-weight:600}
+.backlink{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="../index.html#writing">← Akhilesh Ayyagari</a><a href="../index.html#projects">Projects</a></nav>
+  <p class="eyebrow">Active Directory · Privileged Access</p>
+  <h1>AD Tiering in 5 Steps</h1>
+  <div class="meta">October 2026 · 7 min read · by Akhilesh Ayyagari</div>
+  <article>
+<p>Most Active Directory compromises follow the same script: an attacker lands on a normal workstation, steals a cached credential, and finds that the same account — or one a short hop away — also administers a Domain Controller. The <strong>tiered administration model</strong> breaks that path. It is the single highest-impact change you can make to an AD environment, and you can roll it out in five steps.</p>
+
+<h2>The idea in one sentence</h2>
+<p>Separate your identities and the machines they log on to into tiers, and never let a high-tier credential touch a low-tier machine, where a low-tier attacker could steal it.</p>
+
+<table>
+<tr><th>Tier</th><th>Controls</th><th>Examples</th></tr>
+<tr><td><strong>Tier 0</strong></td><td>Identity &amp; the keys to the kingdom</td><td>Domain Controllers, AD CS, Entra Connect, Domain Admins</td></tr>
+<tr><td><strong>Tier 1</strong></td><td>Servers &amp; applications</td><td>File, SQL, web and application servers</td></tr>
+<tr><td><strong>Tier 2</strong></td><td>Workstations &amp; devices</td><td>User laptops, VDI, help-desk endpoints</td></tr>
+</table>
+
+<p>The rule is simple: a Tier 0 admin account signs in only to Tier 0 systems. If a Domain Admin ever logs on to a user's laptop to "fix something," that laptop can now steal a Domain Admin credential, and the model is broken.</p>
+
+<h2>Step 1 — Inventory what belongs in Tier 0</h2>
+<p>You cannot protect a boundary you have not drawn. List every system that can control identity: Domain Controllers, the AD Certificate Services CA, Entra Connect / AAD Connect servers, your privileged access management vault, and any server holding the credentials of a Tier 0 account. This list is almost always larger than people expect — a backup server that can restore a DC is effectively Tier 0.</p>
+
+<h2>Step 2 — Create separate admin accounts per tier</h2>
+<p>Give each administrator distinct accounts: a normal user account for email and daily work (Tier 2), and separate admin accounts for the tiers they manage. A naming convention makes this auditable:</p>
+<pre><code>jsmith        # daily driver, no admin rights
+jsmith-t1     # Tier 1 server admin
+jsmith-t0     # Tier 0 / Domain Admin</code></pre>
+<p>Put each admin account in a tier-specific OU and group. Nobody uses <code>jsmith-t0</code> to read email.</p>
+
+<h2>Step 3 — Enforce the boundary with logon restrictions</h2>
+<p>Good intentions are not a control. Enforce the separation technically so a tier violation is impossible, not just discouraged:</p>
+<ul>
+<li><strong>Group Policy "Deny log on" rights</strong> — deny Tier 0 accounts the ability to log on to Tier 1 and Tier 2 machines, and so on down.</li>
+<li><strong>Authentication Policy Silos</strong> (Windows Server 2012 R2+) — bind Tier 0 accounts to Tier 0 hosts at the Kerberos level, so a ticket for them is only usable on Tier 0 systems.</li>
+<li><strong>The Protected Users group</strong> — add Tier 0 accounts to limit credential caching and force stronger Kerberos.</li>
+</ul>
+
+<div class="callout"><b>Why this stops the attack:</b> even after an attacker fully owns a Tier 2 laptop, no Tier 0 or Tier 1 credential is ever present on it to steal. The lateral-movement path up to the Domain Controller simply is not there.</div>
+
+<h2>Step 4 — Give admins Privileged Access Workstations</h2>
+<p>A Tier 0 admin needs a clean machine to work from — one that does not browse the web or read email, where malware cannot ride in. A <strong>Privileged Access Workstation (PAW)</strong> is a hardened, locked-down device used only for privileged tasks. Tier 0 administration happens from a PAW, full stop. This is the step people skip, and it is the one that makes the rest real.</p>
+
+<h2>Step 5 — Add just-in-time access and monitoring</h2>
+<p>Standing admin rights are standing risk. Move day-to-day privilege to <strong>just-in-time</strong> activation — Microsoft Entra Privileged Identity Management in the cloud, or a PAM tool on-prem — so an account is only privileged for the window it is actually needed, with approval and MFA on activation. Keep permanent membership in Tier 0 groups down to a couple of monitored break-glass accounts, and alert whenever they sign in.</p>
+
+<h2>Where to start tomorrow</h2>
+<p>You do not need all five steps live before you get value. Do them in order, and each one closes a real door:</p>
+<ol>
+<li>Inventory Tier 0 — you now know what to protect.</li>
+<li>Separate admin accounts — daily work stops exposing admin credentials.</li>
+<li>Logon restrictions — the lateral path is cut.</li>
+<li>PAWs — privileged work happens on clean machines.</li>
+<li>JIT + monitoring — standing privilege shrinks to near zero.</li>
+</ol>
+<p>Tiering is not a product you buy; it is a discipline you enforce. But it is the discipline that turns a single stolen laptop from a domain-wide disaster into a contained incident.</p>
+  </article>
+  <div class="tags"><span>Active Directory</span><span>Tier 0</span><span>Privileged Access</span><span>PAW</span><span>Defense</span></div>
+  <footer>
+    Written by <strong>Akhilesh Ayyagari</strong>, Cloud Infrastructure &amp; Identity Architect.
+    <a class="backlink" href="../index.html">See more work and projects →</a>
+  </footer>
+</div>
+</body>
+</html>

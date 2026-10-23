@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A plain-language explanation of the ADCS ESC1 privilege-escalation vulnerability: how a normal user becomes a Domain Admin through a certificate template, and how to fix it.">
+<title>ADCS ESC1, Explained Simply — Akhilesh Ayyagari</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F3F6; --surface:#FFFFFF; --ink:#151A2C; --muted:#5B6278; --line:#DCDFE7;
+  --accent:#0E8F80; --accent-soft:#D5EFEB; --warm:#E2643A;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0F1220; --surface:#181C2E; --ink:#E9ECF4; --muted:#9CA3BA; --line:#2A3048;
+  --accent:#3CC7B4; --accent-soft:#16353A; --warm:#F08560; color-scheme:dark}}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 var(--body)}
+.wrap{max-width:720px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+nav{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font-family:var(--mono);font-size:.8rem}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{color:var(--ink)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;color:var(--accent)}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.04;letter-spacing:-.03em;margin:.3em 0 .25em;text-wrap:balance}
+.meta{color:var(--muted);font-family:var(--mono);font-size:.8rem;margin-bottom:28px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+article h2{font-family:var(--display);font-weight:700;font-size:1.6rem;letter-spacing:-.02em;margin:1.7em 0 .5em;text-wrap:balance}
+article h3{font-family:var(--display);font-weight:700;font-size:1.2rem;margin:1.4em 0 .4em}
+article p{margin:0 0 1.1em}
+article ul,article ol{margin:0 0 1.2em;padding-left:1.3em}
+article li{margin:.35em 0}
+article strong{font-weight:600}
+code{font-family:var(--mono);font-size:.86em;background:var(--accent-soft);color:var(--ink);padding:1px 6px;border-radius:5px}
+pre{background:#0D1120;color:#C9CFE0;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow-x:auto;font:400 .82rem/1.6 var(--mono);margin:0 0 1.3em}
+pre code{background:none;color:inherit;padding:0}
+blockquote{margin:0 0 1.3em;padding:2px 0 2px 18px;border-left:3px solid var(--accent);color:var(--muted)}
+.callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warm);border-radius:10px;padding:14px 18px;margin:0 0 1.3em}
+.callout b{color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin:0 0 1.3em;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0}
+.tags span{font-family:var(--mono);font-size:.72rem;padding:4px 10px;border:1px solid var(--line);border-radius:999px;color:var(--muted)}
+footer{margin-top:40px;padding:26px 0 50px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+footer a{font-weight:600}
+.backlink{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:.8rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav><a href="../index.html#writing">← Akhilesh Ayyagari</a><a href="../index.html#projects">Projects</a></nav>
+  <p class="eyebrow">Active Directory · Certificate Services</p>
+  <h1>ADCS ESC1, Explained Simply</h1>
+  <div class="meta">October 2026 · 6 min read · by Akhilesh Ayyagari</div>
+  <article>
+<p>Active Directory Certificate Services (AD CS) is the PKI that quietly issues certificates across a Windows domain. In 2021, researchers at SpecterOps showed that a handful of common misconfigurations in AD CS let an ordinary user escalate straight to Domain Admin. They named them ESC1 through ESC8. <strong>ESC1 is the most common, and once you see it, you cannot unsee it.</strong></p>
+
+<h2>The one-paragraph version</h2>
+<p>A certificate proves "I am this identity." If a certificate template lets a low-privileged user (a) request a certificate, (b) <em>write their own name into it</em>, and (c) use it to log on — then that user can request a certificate that says "I am the Domain Administrator" and authenticate as them. That is ESC1.</p>
+
+<h2>The three ingredients</h2>
+<p>ESC1 needs a certificate template with all of these at once:</p>
+<table>
+<tr><th>Ingredient</th><th>What it means</th></tr>
+<tr><td>Enrollee supplies subject</td><td>The requester chooses who the certificate is for, instead of the CA deciding. This is the flaw.</td></tr>
+<tr><td>Client Authentication EKU</td><td>The certificate can be used to log on (Client Auth, PKINIT, Smart Card Logon, or Any Purpose).</td></tr>
+<tr><td>Low-privileged enrollment</td><td>Domain Users (or a broad group) are allowed to request it.</td></tr>
+</table>
+<p>Miss any one and ESC1 does not apply. Have all three on one template and any domain user can become any user.</p>
+
+<h2>How the attack plays out</h2>
+<ol>
+<li>An attacker with a normal account enumerates templates and finds one that is "enrollee supplies subject" + Client Auth + enrollable by Domain Users. Tools like Certify and Certipy do this in one command.</li>
+<li>They request a certificate from that template, and in the request they set the subject alternative name to <code>Administrator</code>.</li>
+<li>The CA happily issues a valid certificate that says the holder is the Domain Administrator.</li>
+<li>They use that certificate to authenticate over Kerberos (PKINIT) and receive a ticket as the Domain Administrator.</li>
+</ol>
+<p>No password was cracked. No exploit was dropped. The PKI did exactly what it was configured to do.</p>
+
+<div class="callout"><b>Why it is so dangerous:</b> certificates are long-lived and survive a password reset. Even after you discover the breach and reset the real admin's password, an issued ESC1 certificate keeps working until it expires or is revoked.</div>
+
+<h2>How to find it</h2>
+<p>You do not need to run an attack tool to check. The vulnerable combination is readable in the template object. The giveaway attribute is <code>msPKI-Certificate-Name-Flag</code> with the <code>CT_FLAG_ENROLLEE_SUPPLIES_SUBJECT</code> bit (<code>0x1</code>) set, on a template that also has a client-authentication EKU and broad enrollment rights.</p>
+<pre><code># Find templates where the enrollee supplies the subject
+Get-ADObject -SearchBase "CN=Certificate Templates,CN=Public Key Services,CN=Services,$((Get-ADRootDSE).configurationNamingContext)" `
+  -LDAPFilter "(objectClass=pKICertificateTemplate)" `
+  -Properties msPKI-Certificate-Name-Flag, pKIExtendedKeyUsage |
+  Where-Object { $_.'msPKI-Certificate-Name-Flag' -band 0x1 }</code></pre>
+<p>For a full audit across ESC1–ESC8, run <strong>Locksmith</strong> or <strong>Certify/Certipy</strong> in audit mode against a lab you own.</p>
+
+<h2>How to fix it</h2>
+<ul>
+<li><strong>Remove "Supply in the request."</strong> Set the template to build the subject from Active Directory instead of letting the requester choose. This alone kills ESC1.</li>
+<li><strong>Require manager approval.</strong> Turn on CA certificate-manager approval so a human signs off before issuance.</li>
+<li><strong>Restrict enrollment.</strong> Limit who can request the template to a specific, trusted group rather than Domain Users.</li>
+<li><strong>Remove unused templates.</strong> If a template is published and nobody uses it, unpublish it.</li>
+</ul>
+
+<h2>The takeaway</h2>
+<p>AD CS is Tier 0. A CA that can issue logon certificates is as powerful as a Domain Controller, and its templates deserve the same scrutiny as your admin groups. ESC1 is not an exotic exploit — it is a checkbox left in the wrong state. Find it, fix the template, and you have closed one of the most reliable paths to Domain Admin in a Windows network.</p>
+  </article>
+  <div class="tags"><span>ADCS</span><span>ESC1</span><span>PKI</span><span>Privilege Escalation</span><span>Defense</span></div>
+  <footer>
+    Written by <strong>Akhilesh Ayyagari</strong>, Cloud Infrastructure &amp; Identity Architect.
+    <a class="backlink" href="../index.html">See more work and projects →</a>
+  </footer>
+</div>
+</body>
+</html>
