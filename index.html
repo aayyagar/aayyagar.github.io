@@ -291,8 +291,37 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">13 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">14 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">GitHub Action · Conditional Access · Graph</span>
+          <div class="kpis">
+            <div><b>29,563</b><span>sign-ins replayed in demo</span></div>
+            <div><b>948</b><span>blocks caught pre-merge</span></div>
+            <div><b>0</b><span>changes to the tenant</span></div>
+          </div>
+<div class="term"><span class="c"># pull request #42: tidy up CA007</span>
+Policy Replay: Conditional Access impact
+<span class="w">  FAIL  break-glass access affected</span>
+<span class="w">  948 sign-ins blocked · 3 admins · break-glass</span>
+  10,942 new MFA prompts (CA003 → On)
+<span class="ok">  check failed before merge</span></div>
+        </div>
+        <div class="body">
+          <h3>Policy Replay</h3>
+          <p>A GitHub Action for Conditional Access kept in Git: it replays the last 30 days of real sign-ins against the policies before and after a pull request, and comments who would be blocked, prompted or let through.</p>
+          <ul>
+            <li><b>Real traffic, not hypotheticals:</b> a local Conditional Access engine evaluates users, groups, roles, apps, platforms, locations, risk and grant controls for every recent sign-in.</li>
+            <li><b>Protects break-glass:</b> fails the check when an emergency access account would be locked out, and highlights admins and guests.</li>
+            <li><b>Catches quiet loosening:</b> flags new exclusions whose effect another change in the same pull request hides.</li>
+            <li><b>Secret-free:</b> signs in with a GitHub OIDC federated credential, reads only, and can redact user names in comments.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/policy-replay/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/policy-replay" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Policy-as-code testing · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
