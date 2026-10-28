@@ -291,8 +291,36 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">15 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">16 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · AD CS · Post-quantum</span>
+          <div class="kpis">
+            <div><b>14</b><span>systems exposed to harvest-now attacks</span></div>
+            <div><b>32/45</b><span>assets quantum-vulnerable</span></div>
+            <div><b>5</b><span>phase roadmap + CycloneDX CBOM</span></div>
+          </div>
+<div class="term"><span class="c"># what would a quantum computer break first?</span>
+PS&gt; .\Invoke-QuantumReadyPki.ps1 -Demo
+<span class="w">  #1 IIS hr.contoso.com  25 y data  overdue</span>
+<span class="w">  #2 S/MIME template     no PQC path yet</span>
+<span class="ok">  Hybrid ML-KEM: 1 endpoint one setting away</span></div>
+        </div>
+        <div class="body">
+          <h3>Quantum-Ready Windows PKI</h3>
+          <p>Finds the cryptography in a Windows and Active Directory estate that a quantum computer could break, and ranks it by how long the data it protects must stay secret.</p>
+          <ul>
+            <li><b>Where Windows keeps its keys:</b> AD CS CAs and templates, TLS on LDAPS, RDP, IIS and WSUS, Kerberos encryption types and PKINIT.</li>
+            <li><b>Ranked by Mosca's inequality:</b> shelf life plus migration time against the quantum year, so 25-year HR data comes before a 2-year intranet.</li>
+            <li><b>Windows-specific paths:</b> ML-DSA CAs on Server 2025, hybrid ML-KEM in Schannel, CNG templates, and Kerberos RC4 removal (CVE-2026-20833).</li>
+            <li><b>Outputs:</b> HTML report, five-phase roadmap and a CycloneDX 1.6 cryptography bill of materials.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/quantum-ready-pki/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/quantum-ready-pki" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>PKI and crypto-agility · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
