@@ -3,8 +3,39 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f8fb">
 <meta name="description" content="Akhilesh Ayyagari, Cloud Infrastructure & Identity Architect. Hybrid cloud, Active Directory, Entra ID and security hardening.">
-<style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<style>*,*::before,*::after{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+/* Pencil-sketch & architectural-blueprint design language */
+:root{--bg:#f6f8fb;--surface:#fff;--ink:#172a40;--muted:#53687c;--line:#d7e1eb;--accent:#0879d1;--accent-soft:#e6f3ff;--warm:#167cc7;--display:"Bricolage Grotesque",system-ui,sans-serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#f6f8fb;--surface:#fff;--ink:#172a40;--muted:#53687c;--line:#d7e1eb;--accent:#0879d1;--accent-soft:#e6f3ff;--warm:#167cc7;color-scheme:light}}
+:root[data-theme="dark"]{--bg:#f6f8fb;--surface:#fff;--ink:#172a40;--muted:#53687c;--line:#d7e1eb;--accent:#0879d1;--accent-soft:#e6f3ff;--warm:#167cc7;color-scheme:light}
+body{background:linear-gradient(180deg,#fff 0,#f4f8fc 520px,#f5f8fb 100%);color:var(--ink)}
+.wrap{max-width:1440px;padding-inline:clamp(16px,3vw,40px)}
+nav{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-bottom:1px solid #dfe7ef;padding-block:15px;margin-inline:calc(-1 * clamp(16px,3vw,40px));padding-inline:clamp(16px,3vw,40px)}
+nav .links{gap:clamp(8px,1.4vw,20px)}nav .links a{font-size:.87rem}nav .links a:hover{color:var(--accent)}
+.hero-v2{display:block;padding:22px 0 36px;min-width:0}
+.hero-art-frame{border:1px solid var(--line);overflow:hidden;border-radius:18px;background:#fff;box-shadow:0 14px 42px rgba(24,79,125,.09)}
+.hero-art-img{width:100%;height:auto;display:block}
+.hero-bottom{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(270px,.7fr);gap:24px;align-items:end;padding:28px 6px 0}
+.eyebrow{font:600 .74rem var(--mono);letter-spacing:.16em;color:var(--accent);margin:0 0 8px}
+.hero-heading{font-size:clamp(2rem,4vw,4rem);line-height:1.02;letter-spacing:-.045em}.hero-heading span{color:var(--accent)}
+.hero-summary{color:var(--muted);font-size:1.03rem;max-width:76ch;margin:14px 0 0}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;justify-content:flex-end}.hero-stack{padding:0 6px;margin-top:20px}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff!important}.btn:hover{box-shadow:0 6px 18px rgba(8,121,209,.12)}
+section{scroll-margin-top:85px;padding-block:48px}.head{border-bottom:1px solid var(--line);padding-bottom:14px}
+h2{color:var(--ink)}.build,.skill,.post,.proj,.demo{box-shadow:0 6px 22px rgba(26,73,116,.045)}
+.build{border-radius:20px}.build .vis{background:linear-gradient(150deg,#0d2742,#071528 78%)}
+.pill{color:#9bd4ff;border-color:#31648f}.kpis b{color:#80ccff}
+.stats{margin-top:6px}.stats b{color:var(--accent)}
+.contact{background:linear-gradient(115deg,#0e2847,#0a4d7d);color:#fff}.contact h2{color:#fff}.contact .label{color:#b8d2e8}.contact .chan div{border-color:rgba(255,255,255,.2)}
+button.copy{background:#d7edff;color:#103653}
+.a1{background:linear-gradient(135deg,#0075bc,#113b71)}.a3{background:radial-gradient(circle at 30% 40%,#a7daff 0 18%,transparent 19%),radial-gradient(circle at 65% 60%,#258bd4 0 24%,transparent 25%),#f3f8fe}
+.a4{background:conic-gradient(from 200deg at 50% 60%,#147cb9,#152d52,#9edcff,#147cb9)}
+@media(max-width:900px){.hero-bottom{grid-template-columns:1fr}.hero-actions{justify-content:flex-start}.hero-art-frame{border-radius:12px}}
+@media(max-width:650px){nav{position:relative}.hero-v2{padding-top:12px}.hero-bottom{padding-top:21px}.hero-heading{font-size:2.3rem}.hero-summary{font-size:.95rem}.stats{grid-template-columns:repeat(2,1fr)}.stats div{padding:14px}.build .body,.build .vis{padding:20px}.proj.wide,.proj.big,.proj.tall,.proj{grid-column:1/-1}.gallery{grid-template-columns:1fr}.hero-art-img{width:100%;max-width:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 <title>Akhilesh Ayyagari Portfolio</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
@@ -211,21 +242,35 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
 @media (max-width:700px){.writing{grid-template-columns:1fr}}
 </style>
 
+<style>
+/* Match the banner: brush blue instead of teal/orange */
+:root{--accent:#0A66C8;--accent-soft:#E3EFFC;--warm:#0B4F9C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--accent:#4C9BFF;--accent-soft:#132A47;--warm:#8CC0FF}}
+:root[data-theme="dark"]{--accent:#4C9BFF;--accent-soft:#132A47;--warm:#8CC0FF}
+</style>
 </head>
 <body>
 <div class="wrap">
   <nav>
-    <span class="status mono"><i></i> Infosys · Atlanta, GA</span>
+    <span class="status mono"><i></i> Atlanta, GA · Cloud & Identity Architecture</span>
     <div class="links"><a href="#terminal">Terminal</a><a href="#projects">Projects</a><a href="#writing">Writing</a><a href="#work">Work</a><a href="#skills">Skills</a><a href="#experience">Experience</a><a href="#contact">Contact</a><a href="https://github.com/aayyagar" target="_blank" rel="noopener">GitHub ↗</a></div>
   </nav>
 
-  <header>
-    <h1>Akhilesh<br>Ayyagari<span>.</span></h1>
-    <div>
-      <p class="intro"><strong>Cloud Infrastructure &amp; Identity Architect</strong> and infrastructure project manager. 20+ years delivering secure hybrid cloud, Windows Server, Active Directory and identity solutions across AWS, Azure and Microsoft Entra ID.</p>
-      <div class="stack"><span>Entra ID</span><span>Azure</span><span>AWS</span><span>Active Directory</span><span>Terraform</span><span>PowerShell</span><span>Sentinel · KQL</span></div>
-      <div class="cta-row"><a class="btn primary" href="https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf" target="_blank" rel="noopener">Download resume (PDF)</a><a class="btn" href="#terminal">Try the terminal</a></div>
+  <header class="hero-v2" id="home">
+    <div class="hero-art-frame"><img class="hero-art-img" src="pencil-sketch-hero.png" width="2048" height="768" alt="Pencil-sketch portrait of Akhilesh Ayyagari with blue digital cloud architecture drawings" fetchpriority="high"></div>
+    <div class="hero-bottom">
+      <div>
+        <p class="eyebrow">CLOUD · IDENTITY · INFRASTRUCTURE</p>
+        <h1 class="hero-heading">From ideas <span>to impact.</span></h1>
+        <p class="hero-summary">Cloud Infrastructure &amp; Identity Architect and infrastructure project manager with 20+ years delivering hybrid cloud, Windows Server, Active Directory, IAM and security solutions across AWS, Azure and Microsoft Entra ID.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn primary" href="#projects">Explore projects ↗</a>
+        <a class="btn" href="https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf" target="_blank" rel="noopener">View resume ↗</a>
+        <a class="btn" href="#contact">Contact me ↗</a>
+      </div>
     </div>
+    <div class="stack hero-stack"><span>Entra ID</span><span>AWS</span><span>Azure</span><span>Active Directory</span><span>Terraform</span><span>PowerShell</span><span>Sentinel &amp; KQL</span></div>
   </header>
 
   <div class="stats">
@@ -595,7 +640,7 @@ PS&gt; .\Invoke-PatchComplianceReport.ps1 -Demo
     <div class="head"><h2>Selected work</h2><span class="label">Client engagements · 2019–2026</span></div>
     <div class="gallery">
       <article class="proj big">
-        <div class="art a1"><span class="tag">Current · 2026</span></div>
+        <div class="art a1"><span class="tag">Mar–Aug 2026</span></div>
         <div class="meta"><h3>T-Mobile · Domain Architect</h3><p>Design and support enterprise DNS and hybrid cloud across AWS, Azure and on-prem. Govern identity and cloud access with Entra ID, Conditional Access and RBAC, and serve as a PIM approver for a 100-member team.</p>
           <div class="row mono"><span>Entra ID · Route 53 · Terraform · Sentinel</span><span class="metric">95% Conditional Access</span></div></div>
       </article>
@@ -646,8 +691,8 @@ PS&gt; .\Invoke-PatchComplianceReport.ps1 -Demo
   <section id="experience">
     <div class="head"><h2>Experience</h2><span class="label">git log --oneline</span></div>
     <div class="log">
-      <div class="commit head-c"><span class="mono"><span class="hash">HEAD</span> · 2021–now</span>
-        <div><h3>Domain Architect · Project Manager · Tech Lead · <span class="co">Infosys</span></h3><p>Sequential client engagements at T-Mobile, Morgan Stanley, Tractor Supply, PG&amp;E and the Empire State Building.</p></div></div>
+      <div class="commit head-c"><span class="mono"><span class="hash">HEAD</span> · 2021–2026</span>
+        <div><h3>Domain Architect · Project Manager · Tech Lead · <span class="co">Infosys</span></h3><p>Client engagements spanning T-Mobile, RNDC, Morgan Stanley, Tractor Supply, PG&amp;E and the Empire State Building.</p></div></div>
       <div class="commit"><span class="mono"><span class="hash">2020–21</span></span>
         <div><h3>Infrastructure Solutions Engineer · <span class="co">State of Kansas</span></h3><p>Managed multi-forest Active Directory with Quest tools, supported cross-agency AD consolidation, and led Exchange upgrades.</p></div></div>
       <div class="commit"><span class="mono"><span class="hash">2019–20</span></span>
@@ -737,10 +782,10 @@ var out=document.getElementById('tout'),inp=document.getElementById('tin'),hist=
 var RES='https://aayyagar.github.io/Akhilesh_Ayyagari_Resume.pdf';
 var CMDS={
  help:'<span class="k">Available commands</span>\n  whoami            who I am\n  skills            core toolkit\n  projects          things I have built\n  experience        career timeline\n  Get-ADUser akhilesh   my AD object, naturally\n  contact           how to reach me\n  resume            download my resume\n  clear             clear the screen',
- whoami:'Akhilesh Ayyagari\nCloud Infrastructure &amp; Identity Architect · Infrastructure Project Manager\n20+ years · Atlanta, GA · currently Domain Architect at T-Mobile (via Infosys)',
+ whoami:'Akhilesh Ayyagari\nCloud Infrastructure &amp; Identity Architect · Infrastructure Project Manager\n20+ years · Atlanta, GA · most recently Domain Architect at T-Mobile (via Infosys)',
  skills:'<span class="k">Identity</span>   Entra ID · Conditional Access · PIM · RBAC · OAuth/OIDC · Okta · AD multi-forest\n<span class="k">Cloud</span>      Azure · AWS · Route 53 · Terraform · PowerShell · Azure DevOps\n<span class="k">Security</span>   Sentinel · KQL · Tenable · CIS L1/L2 · NIST · SSL/TLS lifecycle\n<span class="k">Infra</span>      Windows Server · WSUS · SCCM · VMware · Hyper-V · HP ProLiant',
  projects:'<span class="k">[1]</span> CIS Benchmark Hardening Suite   70+ controls · L2–L6 · 5 frameworks  <a href="#cis-demo">try the demo</a>\n<span class="k">[2]</span> Enterprise AD Security Architecture   70 sections · 12 parts  <a href="#projects">read more</a>',
- experience:'<span class="d">HEAD</span>    2021–now  Infosys · T-Mobile, Morgan Stanley, Tractor Supply, PG&amp;E, Empire State Building\n<span class="d">2020</span>    State of Kansas · Infrastructure Solutions Engineer\n<span class="d">2019</span>    LA County Public Works · Senior Windows Engineer, Security\n<span class="d">2017</span>    WV Office of Technology · Bloomberg · Facorne\n<span class="d">2003</span>    HP ProLiant, AD and network roles',
+ experience:'<span class="d">HEAD</span>    2021–2026  Infosys · T-Mobile, Morgan Stanley, Tractor Supply, PG&amp;E, Empire State Building\n<span class="d">2020</span>    State of Kansas · Infrastructure Solutions Engineer\n<span class="d">2019</span>    LA County Public Works · Senior Windows Engineer, Security\n<span class="d">2017</span>    WV Office of Technology · Bloomberg · Facorne\n<span class="d">2003</span>    HP ProLiant, AD and network roles',
  'get-aduser akhilesh':'DistinguishedName : CN=Akhilesh Ayyagari,OU=Architects,OU=Tier0,DC=portfolio,DC=io\nEnabled           : True\nTitle             : Cloud Infrastructure &amp; Identity Architect\nMFA               : Enforced\nMemberOf          : {Identity, Cloud, Security, Delivery}\nYearsExperience   : 20+\nStatus            : <span class="p">Open to conversations</span>',
  contact:'email     ayyagari.akhilesh@gmail.com\nlinkedin  <a href="https://www.linkedin.com/in/akhilesh-ayyagari" target="_blank" rel="noopener">linkedin.com/in/akhilesh-ayyagari</a>\ngithub    <a href="https://github.com/aayyagar" target="_blank" rel="noopener">github.com/aayyagar</a>',
  resume:'Resume ready → <a href="'+RES+'" target="_blank" rel="noopener">Akhilesh_Ayyagari_Resume.pdf</a>',
