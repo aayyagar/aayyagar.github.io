@@ -291,8 +291,37 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">12 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">13 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · Entra Agent ID · Graph</span>
+          <div class="kpis">
+            <div><b>15</b><span>agent checks</span></div>
+            <div><b>14/22</b><span>hidden permissions found</span></div>
+            <div><b>0</b><span>changes made</span></div>
+          </div>
+<div class="term"><span class="c"># what can your AI agents actually touch?</span>
+PS&gt; .\Invoke-AgentScope.ps1 -Demo
+  Agents: 7  Agent users: 1  Blueprints: 5
+<span class="w">  [Critical] itops-patch-bot  Application.ReadWrite.All</span>
+<span class="w">  [High    ] sales-copilot-eu  sponsor has left</span>
+<span class="w">  [Medium  ] 14 of 22 permissions hidden by inheritance</span></div>
+        </div>
+        <div class="body">
+          <h3>AgentScope</h3>
+          <p>A read-only audit of Microsoft Entra Agent ID: every AI agent identity, its blueprint and sponsors, and what it can actually touch, including the inherited permissions the Entra portal doesn't show.</p>
+          <ul>
+            <li><b>Rebuilds effective permissions:</b> direct grants plus what each agent inherits from its blueprint, explained in plain language like "Read every mailbox in the tenant".</li>
+            <li><b>Finds unaccountable agents:</b> no sponsor, sponsors who have left the company, dormant agents and orphans whose blueprint is gone.</li>
+            <li><b>Flags risky blueprints:</b> "all allowed" inheritance, client secrets, long-lived credentials and unverified third-party publishers.</li>
+            <li><b>Ready to act on:</b> Graph fix requests per finding, a permissions CSV for access reviews, and <code>-FailOn</code> exit codes for CI.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/agentscope/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/agentscope" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>AI agent identity governance · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
