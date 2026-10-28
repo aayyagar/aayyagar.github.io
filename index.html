@@ -291,8 +291,38 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">11 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">12 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · Entra ID + Azure + AWS</span>
+          <div class="kpis">
+            <div><b>16</b><span>trust checks</span></div>
+            <div><b>3</b><span>clouds scanned</span></div>
+            <div><b>0</b><span>changes made</span></div>
+          </div>
+<div class="term"><span class="c"># who can pretend to be your pipeline?</span>
+PS&gt; .\Invoke-FedCredGuardian.ps1 -Demo
+  Score: 66/100  (Grade D)   Ready: 3/16
+<span class="w">  [Critical] AWS role trusts any GitHub repo</span>
+<span class="w">  [Critical] Hyphen-format subject (squattable)</span>
+<span class="ok">  [Ready   ] repo:contoso@5544123/artifacts@…</span>
+  → 7 to migrate · 4 to restrict · 2 to delete</div>
+        </div>
+        <div class="body">
+          <h3>FedCred Guardian</h3>
+          <p>A read-only audit of secret-free CI/CD access: every place Entra ID, Azure managed identities and AWS IAM trust GitHub Actions, with a runbook to move them to GitHub's 2026 immutable subject format.</p>
+          <ul>
+            <li><b>Finds hijackable trusts:</b> roles with no subject condition, org-wide wildcards, renamed or deleted repositories, and owners that no longer exist.</li>
+            <li><b>Catches the Sleeper Squat:</b> detects trust policies copied from GitHub's withdrawn hyphen-delimited format, confirmed against the real owner ID.</li>
+            <li><b>Writes the migration:</b> new subject strings and copy-ready <code>az</code> and <code>aws</code> commands, side by side so pipelines never break.</li>
+            <li><b>CI-ready:</b> HTML, JSON, CSV and Markdown output, plus <code>-FailOn High</code> exit codes for scheduled scans.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/fedcred-guardian/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/fedcred-guardian" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Workload identity security · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
