@@ -291,8 +291,37 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">14 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">15 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">PowerShell · Passkeys · Token Protection</span>
+          <div class="kpis">
+            <div><b>252/420</b><span>would be locked out today</span></div>
+            <div><b>10</b><span>waves, help-desk sized</span></div>
+            <div><b>69</b><span>calendar events (.ics)</span></div>
+          </div>
+<div class="term"><span class="c"># are we ready to require passkeys?</span>
+PS&gt; .\Invoke-CutoverPlanner.ps1 -Demo
+  Ready today: 168 of 420
+<span class="w">  [Blocks] Exchange ActiveSync      17 users</span>
+<span class="w">  [Blocks] iOS 16 / Android 13       41 users</span>
+<span class="ok">  Plan: pilot 24 Nov → 10 waves → 13 Apr</span></div>
+        </div>
+        <div class="body">
+          <h3>Phishing-Resistant Cutover Planner</h3>
+          <p>Plans the move to passkeys and Token Protection in Microsoft Entra ID: who would be locked out today, what's in the way, and a wave-by-wave rollout with dates, help desk estimates and a communications calendar.</p>
+          <ul>
+            <li><b>Readiness from real data:</b> registered methods plus 30 days of sign-ins, including the device-binding status Entra records for Token Protection.</li>
+            <li><b>Fix list:</b> legacy protocols, password-grant scripts, device code flow, old phones and Linux desktops, ranked by how many people they hold back.</li>
+            <li><b>A plan you can run:</b> pilot, admins, then Microsoft's personas, sized to help desk capacity, with a 60-day communications countdown as an .ics calendar.</li>
+            <li><b>Policies included:</b> report-only Conditional Access per wave, ready to test with Policy Replay.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/cutover-planner/sample-report/" target="_blank" rel="noopener">View sample plan</a><a class="btn" href="https://github.com/aayyagar/cutover-planner" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Identity programme delivery · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
