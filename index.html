@@ -434,7 +434,7 @@ PS&gt; .\Invoke-FedCredGuardian.ps1 -Demo
             <li><b>Writes the migration:</b> new subject strings and copy-ready <code>az</code> and <code>aws</code> commands, side by side so pipelines never break.</li>
             <li><b>CI-ready:</b> HTML, JSON, CSV and Markdown output, plus <code>-FailOn High</code> exit codes for scheduled scans.</li>
           </ul>
-          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/fedcred-guardian/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/fedcred-guardian" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/FedCred-Guardian/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/fedcred-guardian" target="_blank" rel="noopener">View on GitHub</a></div>
           <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>Workload identity security · MIT license</span><span class="metric">v1.0.0</span></div>
         </div>
       </article>
@@ -464,7 +464,7 @@ PS&gt; .\Invoke-EntraPostureCheck.ps1 -Demo
             <li><b>Safe by design:</b> every Microsoft Graph call is a GET, with read-only delegated scopes.</li>
             <li><b>Outputs:</b> a filterable HTML report, plus JSON and CSV for tracking and ticketing.</li>
           </ul>
-          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/entra-posture-checker/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/entra-posture-checker" target="_blank" rel="noopener">View code on GitHub</a></div>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/entra-posture-checker/sample-report/index.html" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/entra-posture-checker" target="_blank" rel="noopener">View code on GitHub</a></div>
           <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>PowerShell 5.1 / 7 · MIT license</span><span class="metric">v1.0.0</span></div>
         </div>
       </article>
@@ -727,7 +727,7 @@ $ php_vuln_scanner.py --demo
         <div class="vis">
           <span class="pill">KQL · Microsoft Sentinel</span>
           <div class="kpis">
-            <div><b>24</b><span>detection rules</span></div>
+            <div><b>30</b><span>detection rules</span></div>
             <div><b>8</b><span>ATT&amp;CK tactics</span></div>
             <div><b>3</b><span>data sources</span></div>
           </div>
@@ -740,10 +740,11 @@ AD-009  Risky OAuth consent   🟠 High</div>
         </div>
         <div class="body">
           <h3>Sentinel KQL Detection Pack</h3>
-          <p>24 ready-to-use Microsoft Sentinel detection rules for Active Directory and Entra ID attacks, each with a severity, a MITRE ATT&amp;CK mapping, the entities it surfaces and false-positive tuning notes.</p>
+          <p>30 ready-to-use Microsoft Sentinel detection rules for Active Directory and Entra ID attacks, each with a severity, a MITRE ATT&amp;CK mapping, the entities it surfaces and false-positive tuning notes.</p>
           <ul>
             <li><b>Covers the real attacks:</b> password spray, MFA fatigue, impossible travel, Kerberoasting, AS-REP, DCSync, Golden Ticket, consent phishing and federation backdoors.</li>
             <li><b>Deploy-ready:</b> paste into a scheduled analytics rule, map the listed entities, set the severity, and tune the thresholds to your tenant.</li>
+            <li><b>Validated:</b> every query is parsed in CI with Microsoft's Kusto parser against the Sentinel schemas, and each Entra Posture Checker finding maps to a detection.</li>
             <li><b>Built on</b> the KQL library from the AD Security Architecture guide.</li>
           </ul>
           <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://github.com/aayyagar/sentinel-kql-detections" target="_blank" rel="noopener">View on GitHub</a></div>
