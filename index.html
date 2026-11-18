@@ -291,8 +291,37 @@ footer{padding-block:28px;color:var(--muted);display:flex;justify-content:space-
   </section>
 
   <section id="projects">
-    <div class="head"><h2>Projects I've built</h2><span class="label">16 projects · security, cloud &amp; identity · 2026</span></div>
+    <div class="head"><h2>Projects I've built</h2><span class="label">17 projects · security, cloud &amp; identity · 2026</span></div>
     <div class="builds">
+
+      <article class="build">
+        <div class="vis">
+          <span class="pill">AWS · Terraform · Python · EKS</span>
+          <div class="kpis">
+            <div><b>4</b><span>hands-on labs</span></div>
+            <div><b>$2.6k</b><span>/month found in the demo account</span></div>
+            <div><b>0</b><span>write APIs called</span></div>
+          </div>
+<div class="term"><span class="c"># where is the AWS bill going?</span>
+$ python -m costlab report --demo
+<span class="w">  [Idle    ] jenkins-agent-old  m5.xlarge</span>
+<span class="ok">  [Downsize] reporting-batch    c6i.4xlarge -&gt; 2xlarge</span>
+<span class="w">  Untagged: 18.9% of spend</span>
+<span class="ok">  EKS: 6 nodes -&gt; 4 (2 Spot) with Karpenter</span></div>
+        </div>
+        <div class="body">
+          <h3>AWS Cost-Optimization Labs</h3>
+          <p>Four hands-on labs, each with Terraform to build it and a read-only tool to measure the saving: right-sizing, Spot and scheduling, tagging and showback, and EKS autoscaling with Karpenter.</p>
+          <ul>
+            <li><b>EC2 right-sizing:</b> p95 CPU and memory from CloudWatch, idle and burst-bound detection, T-instance credit baselines and Graviton options.</li>
+            <li><b>Spot and scheduled shutdown:</b> Spot-first Auto Scaling with an On-Demand base, scale-to-zero at night, and a tag-scoped stop/start Lambda.</li>
+            <li><b>Tagging and showback:</b> cost-allocation tags, an AWS Config required-tags rule, a budget per cost center, and untagged-spend tracking.</li>
+            <li><b>EKS with Karpenter:</b> EKS 1.36 and Karpenter 1.14, a Spot-first NodePool and consolidation, from scale-out to scale-to-zero.</li>
+          </ul>
+          <div class="cta-row" style="margin-top:0"><a class="btn primary" href="https://aayyagar.github.io/aws-cost-optimization-labs/sample-report/" target="_blank" rel="noopener">View sample report</a><a class="btn" href="https://github.com/aayyagar/aws-cost-optimization-labs" target="_blank" rel="noopener">View on GitHub</a></div>
+          <div class="row mono" style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted)"><span>FinOps · cloud cost engineering · MIT license</span><span class="metric">v1.0.0</span></div>
+        </div>
+      </article>
 
       <article class="build">
         <div class="vis">
@@ -833,6 +862,7 @@ PS&gt; .\Invoke-PatchComplianceReport.ps1 -Demo
       <div class="skill"><span class="label">Certification</span><h3>Lean Six Sigma Green Belt</h3><p>Acuity Institute · May 2021</p><p><a href="https://www.credly.com/badges/3c9d0c48-d285-4bb2-86b7-4ca80a6c76f1" target="_blank" rel="noopener">View badge on Credly</a></p></div>
       <div class="skill"><span class="label">Certification</span><h3>Fortinet NSE 1 &amp; NSE 2</h3><p>Certified in Cybersecurity · Fortinet</p><p><a href="https://www.credly.com/badges/2068b378-a1fa-4462-96c1-e6d24bd64792/public_url" target="_blank" rel="noopener">NSE 1 badge</a> · <a href="https://www.credly.com/badges/494529c1-2158-4f69-8042-317ee00072de/public_url" target="_blank" rel="noopener">NSE 2 badge</a></p></div>
       <div class="skill"><span class="label">Course completion</span><h3>Claude Code 101</h3><p>Claude Academy by Anthropic · Nov 2026</p><p><a href="https://academy.claude.com/verify/0c6fb3cdd264bb8930987be74eb79f75" target="_blank" rel="noopener">Verify completion</a></p></div>
+      <div class="skill"><span class="label">Hands-on labs</span><h3>AWS cost-optimization labs</h3><p>EC2 right-sizing, Spot and scheduled shutdown, tagging and showback, and EKS autoscaling with Karpenter</p><p><a href="https://github.com/aayyagar/aws-cost-optimization-labs" target="_blank" rel="noopener">View the labs</a></p></div>
     </div>
   </section>
 
