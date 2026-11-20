@@ -1003,5 +1003,157 @@ document.getElementById('copyEmail').addEventListener('click',function(){
   try{navigator.clipboard.writeText(t).then(done,sel)}catch(e){sel()}
 });
 </script>
+<!-- Projects: compact tile grid + pop-out details. Progressive enhancement: without JS the full cards still show. -->
+<style>
+.pfilter{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}
+.pfilter button{font:500 .78rem var(--mono,ui-monospace,monospace);padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted);cursor:pointer}
+.pfilter button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.pfilter button:hover{border-color:var(--accent)}
+.pfilter .cnt{opacity:.7;margin-left:4px}
+.ptiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.ptile{all:unset;box-sizing:border-box;position:relative;display:flex;align-items:center;gap:12px;padding:16px 18px;min-height:74px;border:1px solid var(--line);border-radius:14px;background:var(--surface);cursor:pointer;box-shadow:0 6px 22px rgba(26,73,116,.045);transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease;min-width:0}
+.ptile .ix{font:500 .7rem var(--mono,ui-monospace,monospace);color:var(--muted);flex:none}
+.ptile h3{font-family:var(--display);font-weight:700;font-size:1.02rem;line-height:1.2;margin:0;color:var(--ink);flex:1}
+.ptile .ar{color:var(--accent);font-weight:700;opacity:0;transform:translateX(-4px);transition:.15s ease;flex:none}
+.ptile:hover,.ptile:focus-visible{border-color:var(--accent);box-shadow:0 12px 30px rgba(26,73,116,.12);transform:translateY(-2px);z-index:5}
+.ptile:hover .ar,.ptile:focus-visible .ar{opacity:1;transform:none}
+.ptile:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.ptile .hc{position:absolute;left:-1px;right:-1px;top:calc(100% + 8px);z-index:6;background:var(--surface);border:1px solid var(--accent);border-radius:14px;padding:14px 16px;box-shadow:0 18px 40px rgba(10,30,60,.18);display:grid;gap:8px;opacity:0;visibility:hidden;transform:translateY(-4px);transition:opacity .15s ease,transform .15s ease,visibility 0s linear .15s;pointer-events:none}
+.ptile .hc::before{content:"";position:absolute;top:-7px;left:26px;width:12px;height:12px;background:var(--surface);border-left:1px solid var(--accent);border-top:1px solid var(--accent);transform:rotate(45deg)}
+.ptile .hc .tp{font:500 .64rem var(--mono,ui-monospace,monospace);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.ptile .hc p{margin:0;color:var(--muted);font-size:.88rem;line-height:1.5}
+.ptile .hc .kp{display:flex;align-items:baseline;gap:8px;font-size:.8rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+.ptile .hc .kp b{font-family:var(--display);font-size:1.05rem;color:var(--ink)}
+.ptile .hc .go{white-space:nowrap;font:600 .74rem var(--mono,ui-monospace,monospace);color:var(--accent)}
+@media (hover:hover){.ptile:hover .hc{opacity:1;visibility:visible;transform:none;transition-delay:.12s,.12s,0s}}
+.ptile:focus-visible .hc{opacity:1;visibility:visible;transform:none;transition-delay:0s}
+@media (hover:none){.ptile .ar{opacity:1;transform:none}}
+@media (max-width:650px){.ptiles{gap:8px}.ptile{min-height:58px;padding:12px 16px}}
+.ptile[hidden]{display:none}
+.builds.is-compact > .build,.builds.is-compact > .demo{display:none}
+dialog.pdlg{width:min(1120px,calc(100vw - 32px));max-height:calc(100vh - 40px);padding:0;border:0;border-radius:20px;background:var(--bg);color:var(--ink);box-shadow:0 30px 80px rgba(10,25,45,.35);overflow:hidden}
+dialog.pdlg::backdrop{background:rgba(10,22,40,.55);backdrop-filter:blur(3px)}
+dialog.pdlg[open]{display:flex;flex-direction:column;animation:pdIn .18s ease-out}
+@keyframes pdIn{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+.pdlg .pbar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.pdlg .pbar .pos{font:500 .75rem var(--mono,ui-monospace,monospace);color:var(--muted);margin-right:auto}
+.pdlg .pbar button{font:600 .8rem var(--mono,ui-monospace,monospace);border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;padding:7px 11px;cursor:pointer}
+.pdlg .pbar button:hover{border-color:var(--accent);color:var(--accent)}
+.pdlg .pbody{flex:1 1 auto;min-height:0;overflow:auto;padding:18px;overscroll-behavior:contain}
+.pdlg .pbody > * + *{margin-top:18px !important}
+.pdlg .pbody > .build{display:grid;margin:0}
+.pdlg .pbody > .demo{display:block;margin:0}
+body.p-lock{overflow:hidden}
+@media (max-width:650px){.pdlg .lbl{display:none}.pdlg .pbar .pos{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}dialog.pdlg{width:100vw;max-width:100vw;max-height:100dvh;height:100dvh;border-radius:0}.pdlg .pbody{padding:10px}}
+@media (prefers-reduced-motion:reduce){.ptile,dialog.pdlg[open]{transition:none;animation:none}}
+</style>
+<dialog class="pdlg" id="pdlg" aria-labelledby="pdlgTitle">
+  <div class="pbar"><span class="pos" id="pdlgPos"></span>
+    <button type="button" id="pdlgPrev" aria-label="Previous project">←<span class="lbl"> Prev</span></button>
+    <button type="button" id="pdlgNext" aria-label="Next project"><span class="lbl">Next </span>→</button>
+    <button type="button" id="pdlgClose" aria-label="Close">✕<span class="lbl"> Close</span></button></div>
+  <div class="pbody" id="pdlgBody"></div>
+  <h2 id="pdlgTitle" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)"></h2>
+</dialog>
+<script>
+(function(){
+  var wrap=document.querySelector('#projects .builds');
+  if(!wrap||typeof HTMLDialogElement!=='function')return;
+  /* categories: edit here when you add a project */
+  var CATS=[['all','All'],['identity','Identity & Entra'],['cloud','Cloud & FinOps'],['security','Security & Detection'],['ad','Active Directory & Windows']];
+  var MAP={
+    'AWS Cost-Optimization Labs':['cloud'],
+    'Quantum-Ready Windows PKI':['security','ad'],
+    'Phishing-Resistant Cutover Planner':['identity'],
+    'Policy Replay':['identity'],
+    'AgentScope':['identity','security'],
+    'FedCred Guardian':['identity','cloud'],
+    'Entra ID Security Posture Checker':['identity','security'],
+    'Conditional Access Policy Library':['identity'],
+    'AD Attack Path Lab':['ad','security'],
+    'CIS Benchmark Hardening Suite':['security','ad'],
+    'Enterprise Active Directory Security Architecture':['ad','identity'],
+    'Hybrid Cloud Landing Zone':['cloud'],
+    'Certificate Expiry Monitor':['security'],
+    'Multi-cloud Access Review':['identity','cloud'],
+    'PHP Vulnerability Scanner':['security'],
+    'Sentinel KQL Detection Pack':['security'],
+    'Patch Compliance Dashboard':['ad']
+  };
+  function slug(t){return t.toLowerCase().replace(/&amp;|&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+  var items=[];
+  Array.prototype.forEach.call(wrap.querySelectorAll(':scope > .build'),function(a){
+    var h=a.querySelector('.body h3'); if(!h)return;
+    var title=h.textContent.trim(), next=a.nextElementSibling;
+    var p=a.querySelector('.body > p'), pill=a.querySelector('.pill'), k=a.querySelector('.kpis > div');
+    items.push({el:a,demo:(next&&next.classList.contains('demo'))?next:null,title:title,id:slug(title),
+      pill:pill?pill.textContent.trim():'',desc:p?p.textContent.trim():'',
+      kb:k&&k.querySelector('b')?k.querySelector('b').textContent:'',ks:k&&k.querySelector('span')?k.querySelector('span').textContent:'',
+      cats:MAP[title]||[]});
+  });
+  if(!items.length)return;
+
+  var bar=document.createElement('div');bar.className='pfilter';bar.setAttribute('role','toolbar');bar.setAttribute('aria-label','Filter projects');
+  var grid=document.createElement('div');grid.className='ptiles';
+  CATS.forEach(function(c){
+    var n=c[0]==='all'?items.length:items.filter(function(i){return i.cats.indexOf(c[0])>-1}).length;
+    if(!n)return;
+    var b=document.createElement('button');b.type='button';b.dataset.cat=c[0];b.setAttribute('aria-pressed',c[0]==='all');
+    b.innerHTML=c[1]+'<span class="cnt">'+n+'</span>';
+    b.addEventListener('click',function(){filter(c[0])});bar.appendChild(b);
+  });
+  function esc(t){var d=document.createElement('div');d.textContent=t;return d.innerHTML}
+  items.forEach(function(it,ix){
+    var t=document.createElement('button');t.type='button';t.className='ptile';t.dataset.ix=ix;
+    t.setAttribute('aria-haspopup','dialog');
+    t.setAttribute('aria-label',it.title+' - '+it.desc);
+    t.innerHTML='<span class="ix">'+(ix<9?'0':'')+(ix+1)+'</span><h3>'+esc(it.title)+'</h3><span class="ar" aria-hidden="true">→</span>'+
+      '<span class="hc" aria-hidden="true"><span class="tp">'+esc(it.pill)+'</span><p>'+esc(it.desc)+'</p>'+
+      '<span class="kp">'+(it.kb?'<b>'+esc(it.kb)+'</b><span>'+esc(it.ks)+'</span>':'')+'<span class="go" style="margin-left:auto">Click for details</span></span></span>';
+    t.addEventListener('click',function(){open(ix)});
+    it.tile=t;grid.appendChild(t);
+  });
+  wrap.parentNode.insertBefore(bar,wrap);wrap.parentNode.insertBefore(grid,wrap);
+  wrap.classList.add('is-compact');
+
+  var cur='all';
+  function filter(cat){cur=cat;
+    Array.prototype.forEach.call(bar.children,function(b){b.setAttribute('aria-pressed',b.dataset.cat===cat)});
+    items.forEach(function(it){it.tile.hidden=!(cat==='all'||it.cats.indexOf(cat)>-1)});}
+  function visible(){return items.filter(function(it){return !it.tile.hidden})}
+
+  var dlg=document.getElementById('pdlg'),body=document.getElementById('pdlgBody'),openIx=-1,home=[];
+  function restore(){ /* put the original nodes back so the page works without the dialog */
+    home.forEach(function(h){h.parent.insertBefore(h.node,h.before)});home=[];}
+  function show(ix){
+    restore();
+    var it=items[ix];openIx=ix;
+    [it.el,it.demo].forEach(function(n){if(n){home.push({node:n,parent:n.parentNode,before:n.nextSibling});body.appendChild(n)}});
+    if(it.demo){home.reverse()}
+    document.getElementById('pdlgTitle').textContent=it.title;
+    var v=visible(),pos=v.indexOf(it);
+    document.getElementById('pdlgPos').textContent=(pos+1)+' / '+v.length+' · '+it.title;
+    body.scrollTop=0;
+    if(location.hash!=='#project-'+it.id)history.replaceState(null,'','#project-'+it.id);
+  }
+  function open(ix){show(ix);if(!dlg.open){dlg.showModal();document.body.classList.add('p-lock')}document.getElementById('pdlgClose').focus()}
+  function step(d){var v=visible(),pos=v.indexOf(items[openIx]);var n=v[(pos+d+v.length)%v.length];show(items.indexOf(n))}
+  dlg.addEventListener('close',function(){restore();document.body.classList.remove('p-lock');
+    if(openIx>-1&&items[openIx].tile)items[openIx].tile.focus();openIx=-1;
+    if(location.hash.indexOf('#project-')===0)history.replaceState(null,'',location.pathname+location.search+'#projects');});
+  dlg.addEventListener('click',function(e){if(e.target===dlg)dlg.close()});
+  dlg.addEventListener('keydown',function(e){if(e.key==='ArrowRight'&&e.target.tagName!=='INPUT')step(1);if(e.key==='ArrowLeft'&&e.target.tagName!=='INPUT')step(-1)});
+  document.getElementById('pdlgClose').addEventListener('click',function(){dlg.close()});
+  document.getElementById('pdlgPrev').addEventListener('click',function(){step(-1)});
+  document.getElementById('pdlgNext').addEventListener('click',function(){step(1)});
+
+  /* deep links: #project-<name>, and the old #cis-demo link opens the CIS card */
+  function fromHash(){var h=location.hash;
+    if(h==='#cis-demo'){var c=items.filter(function(i){return i.demo})[0];if(c){open(items.indexOf(c));setTimeout(function(){c.demo.scrollIntoView({block:'start'})},50)}return}
+    if(h.indexOf('#project-')===0){var id=h.slice(9);items.forEach(function(it,ix){if(it.id===id)open(ix)})}}
+  window.addEventListener('hashchange',fromHash);fromHash();
+})();
+</script>
+
 </body>
 </html>
